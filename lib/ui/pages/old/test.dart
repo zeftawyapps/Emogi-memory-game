@@ -4,20 +4,19 @@ import 'dart:async';
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:memory_game/logic/projprovider.dart';
-import 'package:memory_game/ui/widgets/animations.dart';
+import 'package:memory_game/logic/gameprovider.dart';
+ import 'package:memory_game/ui/widgets/animations.dart';
 import 'package:provider/provider.dart';
 
 import 'package:animate_do/animate_do.dart';
 import 'package:drag_select_grid_view/drag_select_grid_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:memory_game/logic/gameprovider.dart';
-import 'package:memory_game/logic/imgvalues.dart';
-import 'package:memory_game/logic/projprovider.dart';
 import 'package:memory_game/ui/widgets/animations.dart';
 import 'package:memory_game/ui/widgets/bcg.dart';
 import 'package:provider/provider.dart';
+
+import '../../../logic/projprovider.dart';
 
 
 class Testanim extends StatefulWidget {

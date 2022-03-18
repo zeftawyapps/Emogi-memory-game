@@ -4,11 +4,11 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:memory_game/logic/gameprovider.dart';
-import 'package:memory_game/logic/values.dart';
+ import 'package:memory_game/logic/values.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../values.dart';
-import 'gamescreen.dart';
+ import '../../values.dart';
+ import 'gamescreen.dart';
 
 
 class GameResult extends StatefulWidget  {

@@ -1,6 +1,5 @@
 import 'package:memory_game/logic/mylibs/jsonManger.dart';
-import 'package:memory_game/logic/stagesmaneger.dart';
-import 'package:memory_game/logic/values.dart';
+ import 'package:memory_game/logic/values.dart';
 
 
 import 'modulscreateor.dart';

@@ -6,17 +6,14 @@ import 'package:drag_select_grid_view/drag_select_grid_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
- import 'package:memory_game/logic/gameprovider.dart';
-import 'package:memory_game/logic/imgvalues.dart';
-import 'package:memory_game/logic/projprovider.dart';
-import 'package:memory_game/ui/pages/gameresulte.dart';
-import 'package:memory_game/ui/widgets/animations.dart';
-import 'package:memory_game/ui/widgets/bcg.dart';
-import 'package:memory_game/ui/widgets/gameicons_icons.dart';
+import 'package:memory_game/logic/gameprovider.dart';
+    import '../../../logic/projprovider.dart';
+import '../../values.dart';
+import '../../widgets/animations.dart';
+import '../../widgets/bcg.dart';
+import '../../widgets/gameicons_icons.dart';
+import 'gameresulte.dart';
 import 'package:provider/provider.dart';
-
-
-import '../values.dart';
 class Game_Sreen extends StatefulWidget {
   // const Game_Sreen({Key key}) : super(key: key);
 

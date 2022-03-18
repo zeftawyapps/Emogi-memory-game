@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:memory_game/logic/projprovider.dart';
-import 'package:memory_game/ui/pages/gamescreen.dart';
-import 'package:memory_game/logic/gameprovider.dart';
-import 'package:memory_game/ui/pages/spachscreen.dart';
-import 'package:memory_game/ui/pages/test.dart';
+import 'package:memory_game/ui/pages/old/spachscreen.dart';
 import 'package:provider/provider.dart';
 
-import 'ui/pages/mainscreen.dart';
+import 'logic/gameprovider.dart';
+import 'logic/projprovider.dart';
 
 void main() {
   runApp(MyApp());

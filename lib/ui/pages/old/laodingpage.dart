@@ -1,8 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:memory_game/ui/pages/gamescreen.dart';
-class Relaodscrean extends StatefulWidget {
+
+import 'gamescreen.dart';
+ class Relaodscrean extends StatefulWidget {
   const Relaodscrean({Key? key}) : super(key: key);
 
   @override
