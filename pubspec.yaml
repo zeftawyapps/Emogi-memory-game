@@ -28,7 +28,9 @@ dependencies:
   animate_do:
   path_provider:
   shared_preferences:
-#  just_audio: ^0.9.5
+  flutter_bloc: ^7.0.1
+
+  #  just_audio: ^0.9.5
 
 
   # The following adds the Cupertino Icons font to your application.
