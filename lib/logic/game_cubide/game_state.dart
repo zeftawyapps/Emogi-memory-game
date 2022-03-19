@@ -2,15 +2,13 @@ part of 'game_cubit.dart';
 
 @immutable
   class GameState {
-  GameState._internal();
-  static final GameState _gameState = GameState._internal();
-  factory GameState() {
-    return _gameState;
-  }
+
+    GameState() {
+   }
 
 }
 
-mixin GameLoading implements GameState {
+class GameLoading implements GameState {
 
 }
 mixin NewGame implements GameState {

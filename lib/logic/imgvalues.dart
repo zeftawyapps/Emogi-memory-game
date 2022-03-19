@@ -34,11 +34,11 @@ List<String> getimagLevel(int i ){
  imaglevels  =[imagesvalues_FirstStages];
  return imaglevels[i];
 }
- class Cardstates{int state =0;  String imagesv='';
+ class CardModule{int state =0;  String imagesv='';
  bool isrotating  = false ;
  bool isclicked  = false ;
  int cardno;
- Cardstates( this.imagesv,this.cardno);
+ CardModule( this.imagesv,this.cardno);
  }
  const int  IS_CHOSSED = 1;
 const int  NO_CHANCH = 0;

@@ -14,7 +14,7 @@ import 'imgvalues.dart';
 
 class GameProvider extends ChangeNotifier {
   List<String> valuesCards = [];
-  List< Cardstates > cards =  [];
+  List< CardModule > cards =  [];
 bool isgamestarted = false ;
 bool iscrrect = false ;
   // main values to start any level
@@ -157,11 +157,11 @@ cards.clear() ;
 
      int  r1  = randomplace.nextInt(cardprocess.length);
 
-     cards.add(Cardstates(cardprocess[r1],r1 ));
+     cards.add(CardModule(cardprocess[r1],r1 ));
      cardprocess.remove(cardprocess[r1 ]);
 
      int  r2  = randomplace.nextInt(cardprocess.length);
-     cards.add(Cardstates( cardprocess[r2],r2));
+     cards.add(CardModule( cardprocess[r2],r2));
      cardprocess.remove(cardprocess[r2 ]);
 
    }
@@ -206,7 +206,7 @@ cards[i].state = 1 ;
 
     notifyListeners();
      }
-  List< Cardstates > cardscurrect =  [];
+  List< CardModule > cardscurrect =  [];
 
   void helpcurect( BuildContext context ){
 

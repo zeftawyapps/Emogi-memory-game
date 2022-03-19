@@ -25,7 +25,7 @@ class StagesModule extends Module with JsonManger{
   }
   List <String >ss =[];
 
-  void laodnig()async  {
+  Future laodnig()async  {
 String     respons = await  readFile(filesDire, filename);
 getDataModule(  readdata(tablename, respons));
 getDataTable(datamodule);

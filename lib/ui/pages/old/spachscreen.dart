@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:memory_game/ui/pages/game_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../../../logic/gameprovider.dart';
@@ -15,7 +16,7 @@ GameProvider gameProvider = GameProvider() ;
 
   Timer.periodic(Duration(seconds: 1 ), (timer) {
     gameProvider.loading() ;
-    Navigator.pushReplacement(context , MaterialPageRoute(builder:   (c)=>Game_Sreen())); 
+    Navigator.pushReplacement(context , MaterialPageRoute(builder:   (c)=>GameScreen()));
     timer.cancel() ; });
     return Scaffold(body: Container(child: Center(child: Text("s"),),));
   }
