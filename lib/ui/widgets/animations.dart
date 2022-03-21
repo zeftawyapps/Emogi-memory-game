@@ -7,10 +7,12 @@ class Rotate extends StatefulWidget {
   Widget child1;
   Widget child2;
   bool animate;
+bool toMainFace = false ;
 
 
-
-    Rotate({  required this. child1 , required this. child2  , this.animate = false,  })  ;
+    Rotate({  required this. child1 , required this. child2  , this.animate = false,
+    this.toMainFace = false
+    })  ;
 
   @override
   _RotateState createState() => _RotateState();
@@ -20,14 +22,15 @@ class _RotateState extends State<Rotate>  with TickerProviderStateMixin{
   late   AnimationController controller;
   late  Animation<double> animation;
   late  Timer _timer;
+  int timePawer = 500;
   ProjectProvider projectProvider = ProjectProvider();
-  var  oneSec = const Duration(seconds: 1 );
-  bool changecolor  =false ;
+  var  oneSec = const Duration(milliseconds:500 );
+  bool mainFace  = false   ;
   @override
   void initState() {
     super.initState();
     controller = new AnimationController(
-        duration: Duration(seconds: 1), vsync: this)..addListener(() =>
+        duration: Duration(milliseconds: 200), vsync: this)..addListener(() =>
         setState(() {}));
     animation = Tween(begin:  0.0, end: 1.5).animate(controller);
 
@@ -35,8 +38,10 @@ class _RotateState extends State<Rotate>  with TickerProviderStateMixin{
 
   @override
   Widget build(BuildContext context) {
-    projectProvider = context.watch<ProjectProvider>();
-    if(widget.animate) {
+
+ if (widget.toMainFace){mainFace = false ; }
+
+     if(widget.animate) {
       controller.forward();
       controller.addStatusListener((status) {
         if (status == AnimationStatus.completed) {
@@ -45,7 +50,7 @@ class _RotateState extends State<Rotate>  with TickerProviderStateMixin{
             widget.animate = false;
             // projectProvider.setiscardrotated(widget.iscrard);
             setState(() {
-              changecolor = !changecolor;
+              mainFace = !mainFace;
             });
           }
         }
@@ -54,7 +59,7 @@ class _RotateState extends State<Rotate>  with TickerProviderStateMixin{
     return Transform(
         alignment: FractionalOffset.center,
         transform: Matrix4.identity()..rotateY(animation.value),
-        child:changecolor? widget.child1:widget.child2);
+        child:mainFace? widget.child1:widget.child2);
   }
 
   @override
@@ -80,7 +85,7 @@ bool reserv ;
   MyZoomOut(
       {this.key,
         required this.child,
-        this.duration = const Duration(milliseconds: 500),
+        this.duration = const Duration(milliseconds: 200),
         this.delay = const Duration(milliseconds: 0),
         this.controller,
         this.manualTrigger = false,

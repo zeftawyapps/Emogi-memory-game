@@ -24,6 +24,7 @@ dependencies:
   flutter:
     sdk: flutter
   provider:
+  flutter_screenutil: ^5.0.0+2
   drag_select_grid_view:
   animate_do:
   path_provider:

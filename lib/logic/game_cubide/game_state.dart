@@ -1,33 +1,46 @@
 part of 'game_cubit.dart';
 
 @immutable
-  class GameState {
+  class GameStatus {
 
-    GameState() {
+    GameStatus() {
    }
 
 }
 
-class GameLoading implements GameState {
+class GameLoading  implements GameStatus {
 
 }
-mixin NewGame implements GameState {
+class GameStart  implements GameStatus {
 
 }
-mixin HelpCorroct implements GameState {
+class NewGame  extends GameStart  implements GameStatus {
+
+}
+class HelpCorroct extends GameStart implements GameStatus {
 
 }
 
-mixin HelpAdd implements GameState {
+mixin HelpAdd implements GameStatus {
 
 }
-
-mixin CardClick implements GameState {
-
-}
-mixin CardCurrect implements GameState {
+class  CardRotat extends GameStart implements   GameStatus {
 
 }
-mixin CardWrang implements GameState {
+class  CardClick extends GameStart implements   GameStatus  {
+
+}
+class  WaitToResult extends GameStart implements   GameStatus {
+}
+class  Result extends GameStart implements   GameStatus {
+
+}
+class  ResultDone extends GameStart implements   GameStatus  {
+
+}
+mixin CardCurrect implements GameStatus {
+
+}
+mixin CardWrang implements GameStatus {
 
 }

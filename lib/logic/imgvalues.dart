@@ -37,7 +37,7 @@ List<String> getimagLevel(int i ){
  class CardModule{int state =0;  String imagesv='';
  bool isrotating  = false ;
  bool isclicked  = false ;
- int cardno;
+ int cardno;int result = NO_CHANCH;
  CardModule( this.imagesv,this.cardno);
  }
  const int  IS_CHOSSED = 1;

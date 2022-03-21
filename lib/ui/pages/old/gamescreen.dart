@@ -357,15 +357,15 @@ double  aspectretio(){
       switch(colomno){
         case  2 :
           if (gamep.cardnum==6){
-          return 1.00;}else{return 1.35; }
+          return 1.10;}else{return 1.40; }
         case  3 :
 
            return .9 ;
         case  4 :
 
 switch (gamep.cardnum){
-  case 20 : return 0.90;
-  case 24: return 1 ;
+  case 20 : return .50;
+  case 24: return 3.2 ;
   case 28 : return 1.1 ;
 }
       }

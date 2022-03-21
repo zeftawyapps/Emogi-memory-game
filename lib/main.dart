@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:memory_game/ui/pages/old/spachscreen.dart';
 import 'package:provider/provider.dart';
 
@@ -19,9 +20,15 @@ class MyApp extends StatelessWidget {
 
       ]
 
-      ,child: MaterialApp(
-        debugShowCheckedModeBanner: false ,
-        home : SpachScreen()),);
+      ,child: ScreenUtilInit(
+        minTextAdapt: true,
+        designSize: const Size(375, 812),
+        builder: () {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false ,
+            home : SpachScreen());
+        }
+      ),);
   }
 }
 
