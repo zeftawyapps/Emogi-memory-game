@@ -41,20 +41,30 @@ class _CardItemState extends State<CardItem> {
         }
         if (s is CardRotat || s is WaitToResult) {
           isNoAction = true;
-        } else {
+        }
+        if (s is ResultDone || s is CardClick) {
           isNoAction = false;
         }
-        if (s is Result) {
-          if (widget.cardModule.result == IS_CHOSSED) {
-            widget.gameCubit.resultDone(widget.cardModule);
-            annimate = true ;
+        if (s is ResultWrong) {
+          if (widget.cardModule.result == WRONG_CHOOSe) {
+            annimate = true;
 
             Timer(Duration(milliseconds: 300), () {
               setState(() {
                 annimate = false;
+                widget.gameCubit.resultDone(widget.cardModule);
               });
             });
           }
+        }
+
+        if (s is ResultCurrect) {
+          Timer(Duration(milliseconds: 300), () {
+            setState(() {
+              annimate = false;
+              widget.gameCubit.resultDone(widget.cardModule);
+            });
+          });
         }
       },
       listenWhen: (p, c) => p != c,
@@ -113,6 +123,7 @@ class _CardItemState extends State<CardItem> {
                   ),
                 ),
               ),
+              animationCompleted: () {},
             )),
       ),
     );

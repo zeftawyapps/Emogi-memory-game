@@ -3,63 +3,55 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:memory_game/logic/projprovider.dart';
 import 'package:provider/provider.dart';
+
 class Rotate extends StatefulWidget {
   Widget child1;
   Widget child2;
   bool animate;
-bool toMainFace = false ;
+  bool toMainFace = false;
+  VoidCallback animationCompleted;
 
-
-    Rotate({  required this. child1 , required this. child2  , this.animate = false,
-    this.toMainFace = false
-    })  ;
+  Rotate(
+      {required this.child1,
+      required this.child2,
+      this.animate = false,
+      this.toMainFace = false,
+      required this.animationCompleted});
 
   @override
   _RotateState createState() => _RotateState();
 }
 
-class _RotateState extends State<Rotate>  with TickerProviderStateMixin{
-  late   AnimationController controller;
-  late  Animation<double> animation;
-  late  Timer _timer;
+class _RotateState extends State<Rotate> with TickerProviderStateMixin {
+  late AnimationController controller;
+  late Animation<double> animation;
+  late Timer _timer;
   int timePawer = 500;
   ProjectProvider projectProvider = ProjectProvider();
-  var  oneSec = const Duration(milliseconds:500 );
-  bool mainFace  = false   ;
+  var oneSec = const Duration(milliseconds: 500);
+  bool mainFace = false;
   @override
   void initState() {
     super.initState();
     controller = new AnimationController(
-        duration: Duration(milliseconds: 200), vsync: this)..addListener(() =>
-        setState(() {}));
-    animation = Tween(begin:  0.0, end: 1.5).animate(controller);
-
+        duration: Duration(milliseconds: 200), vsync: this)
+      ..addListener(() => setState(() {}));
+    animation = Tween(begin: 0.0, end: 1.5).animate(controller);
   }
 
   @override
   Widget build(BuildContext context) {
-
- if (widget.toMainFace){mainFace = false ; }
-
-     if(widget.animate) {
-      controller.forward();
-      controller.addStatusListener((status) {
-        if (status == AnimationStatus.completed) {
-          if (widget.animate) {
-            controller.reverse();
-            widget.animate = false;
-            // projectProvider.setiscardrotated(widget.iscrard);
-            setState(() {
-              mainFace = !mainFace;
-            });
-          }
-        }
-      });
+    if (widget.toMainFace) {
+      mainFace = false;
     }
+
+
+    animate();
+
     return Transform(
         alignment: FractionalOffset.center,
         transform: Matrix4.identity()..rotateY(animation.value),
-        child:mainFace? widget.child1:widget.child2);
+        child: mainFace ? widget.child1 : widget.child2);
   }
 
   @override
@@ -68,9 +60,23 @@ class _RotateState extends State<Rotate>  with TickerProviderStateMixin{
     super.dispose();
   }
 
+  void animate() async {
+    if (widget.animate) {
+      controller.forward();
 
+      controller.addStatusListener((status) {
+        if (status == AnimationStatus.completed) {
+          controller.reverse();
+          if (widget.animate) {
+            widget.animate = false;
+
+            mainFace = !mainFace;
+          }
+        }
+      });
+    }
+  }
 }
-
 
 class MyZoomOut extends StatefulWidget {
   final Key? key;
@@ -81,17 +87,17 @@ class MyZoomOut extends StatefulWidget {
   final bool manualTrigger;
   final bool animate;
   final double from;
-bool reserv ;
+  bool reserv;
   MyZoomOut(
       {this.key,
-        required this.child,
-        this.duration = const Duration(milliseconds: 200),
-        this.delay = const Duration(milliseconds: 0),
-        this.controller,
-        this.manualTrigger = false,
-        this.animate = true,
-        this.reserv = false ,
-        this.from = 0.0})
+      required this.child,
+      this.duration = const Duration(milliseconds: 200),
+      this.delay = const Duration(milliseconds: 0),
+      this.controller,
+      this.manualTrigger = false,
+      this.animate = true,
+      this.reserv = false,
+      this.from = 0.0})
       : super(key: key) {
     if (manualTrigger == true && controller == null) {
       throw FlutterError('If you want to use manualTrigger:true, \n\n'
@@ -105,7 +111,8 @@ bool reserv ;
 }
 
 /// State class, where the magic happens
-class _MyZoomOutState extends State<MyZoomOut> with SingleTickerProviderStateMixin {
+class _MyZoomOutState extends State<MyZoomOut>
+    with SingleTickerProviderStateMixin {
   AnimationController? controller;
   bool disposed = false;
   late Animation<double> zoom;
@@ -141,9 +148,9 @@ class _MyZoomOutState extends State<MyZoomOut> with SingleTickerProviderStateMix
     if (widget.controller is Function) {
       widget.controller!(controller!);
     }
-    if (widget.reserv){
-     controller!.reverse();
-  }
+    if (widget.reserv) {
+      controller!.reverse();
+    }
   }
 
   @override

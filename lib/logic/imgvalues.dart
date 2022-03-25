@@ -41,5 +41,8 @@ List<String> getimagLevel(int i ){
  CardModule( this.imagesv,this.cardno);
  }
  const int  IS_CHOSSED = 1;
+const int  WRONG_CHOOSe = 3;
+
 const int  NO_CHANCH = 0;
 const int  MATCHED = 2;
+const int  STARTED = -1;

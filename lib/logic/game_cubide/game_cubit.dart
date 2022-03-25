@@ -32,7 +32,8 @@ class GameCubit extends Cubit<GameStatus> {
   int colomesno = 2;
   int _counter = 0;
   CardModule? card1, card2;
-
+  int _defultlevel = 1;
+  int _defulthelpers = 20;
   void gameInit() async {
     await stagesManager.laodnig();
 
@@ -44,7 +45,6 @@ class GameCubit extends Cubit<GameStatus> {
     _lastitemno = _getDatafromjson(stagesManager.lastitemno);
 
     colomesno = _getDatafromjson(stagesManager.colomesno);
-
 
     gameConraller = GameConraller(
         gamelevle: _gamelevle,
@@ -59,11 +59,10 @@ class GameCubit extends Cubit<GameStatus> {
 
     imagesvalues = _getimagLevel(0);
     _randomchosing();
-
     emit(GameLoading());
   }
-  void gameRestart() async {
 
+  void gameRestart() async {
     await _loadSavedData();
 
     _cardnum = _getDatafromjson(stagesManager.cardnum);
@@ -72,7 +71,6 @@ class GameCubit extends Cubit<GameStatus> {
     _lastitemno = _getDatafromjson(stagesManager.lastitemno);
 
     colomesno = _getDatafromjson(stagesManager.colomesno);
-
 
     gameConraller = GameConraller(
         gamelevle: _gamelevle,
@@ -89,44 +87,51 @@ class GameCubit extends Cubit<GameStatus> {
     _randomchosing();
 
     emit(GameLoading());
-    Timer(Duration(milliseconds: 100) , (){
-      emit(GameStart());
+    Timer(Duration(milliseconds: 100), () {
+      _counter = 0;
 
+      emit(GameStart());
     });
   }
 
-  void Clik(CardModule card, int i) {
+  void clik(CardModule card, int i) {
     emit(CardRotat());
     cards[i].isclicked = true;
+    cards[i].result = IS_CHOSSED;
     _counter++;
     Timer(Duration(milliseconds: 500), () {
       if (_counter == 2) {
-
         card2 = cards[i];
         emit(WaitToResult());
 
         Timer(Duration(milliseconds: 500), () {
-          if (_matching(card1!.imagesv, card2!.imagesv))
-          {
-_currect();
+          if (_matching(card1!.imagesv, card2!.imagesv)) {
+            _currect();
+            _counter = 0;
+            emit(ResultCurrect());
+          } else {
+            _warng();
+            _counter = 0;
 
-          }else {
-            _warng() ;
+            emit(ResultWrong());
           }
-          _counter = 0 ;
-emit(Result()) ;
         });
       } else {
-
         card1 = cards[i];
         emit(CardClick());
       }
     });
   }
-void resultDone(CardModule c ) {
-    cards[c.cardno].result = NO_CHANCH ;
+
+  void resultDone(CardModule c) {
+    if (cards[c.cardno].result == MATCHED) {
+      emit(ResultDone());
+      return;
+    }
+    cards[c.cardno].result = NO_CHANCH;
     emit(ResultDone());
-}
+  }
+
   dynamic _getDatafromjson(Cell c) {
     return stagesManager.dataTable[_gamelevle - 1].getvalue(c);
   }
@@ -134,23 +139,27 @@ void resultDone(CardModule c ) {
   bool _matching(String c, String c1) {
     return c == c1;
   }
-void _warng (){
-  card1!.isclicked = false;
-  card2!.isclicked = false;
-card1!.result =  IS_CHOSSED;
-  card2!.result = IS_CHOSSED;
-}
-  void _currect(){
-    card1!. isclicked= false;
+
+  void _warng() {
+    card1!.isclicked = false;
+    card2!.isclicked = false;
+    card1!.result = WRONG_CHOOSe;
+    card2!.result = WRONG_CHOOSe;
+  }
+
+  void _currect() {
+    card1!.isclicked = false;
     card2!.isclicked = false;
     card1!.result = MATCHED;
     card2!.result = MATCHED;
   }
+
   Future _loadSavedData() async {
     sharedPreferences = await SharedPreferences.getInstance();
-    _gamelevle = sharedPreferences.getInt(sharedStages) ?? 22;
-    _helpAddTryis = sharedPreferences.getInt(sharedhelpadd) ?? 20;
-    _helpAddCurrectCard = sharedPreferences.getInt(sharedhelpcurrect) ?? 20;
+    _gamelevle = sharedPreferences.getInt(sharedStages) ?? _defultlevel;
+    _helpAddTryis = sharedPreferences.getInt(sharedhelpadd) ?? _defulthelpers;
+    _helpAddCurrectCard =
+        sharedPreferences.getInt(sharedhelpcurrect) ?? _defulthelpers;
   }
 
   int _settryies() {
@@ -213,6 +222,7 @@ card1!.result =  IS_CHOSSED;
     }
     for (int i = 0; i < cards.length; i++) {
       cards[i].cardno = i;
+      cards[i].result = STARTED;
       print('${cards[i].imagesv}  noms  ${cards[i].cardno}');
     }
   }
@@ -243,11 +253,11 @@ card1!.result =  IS_CHOSSED;
   double fontsize() {
     switch (colomesno) {
       case 2:
-        return 35.sp;
+        return 45.sp;
       case 3:
-        return 30.sp;
+        return 40.sp;
       case 4:
-        return 20.sp;
+        return 30.sp;
     }
     return 10;
   }

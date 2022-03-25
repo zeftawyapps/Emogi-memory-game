@@ -37,18 +37,8 @@ class _TestanimState extends State<Testanim> {
       body: Container(
         child: Column(
            children: [
-             Center(
-               child: Rotate(animate: setanim ,
- child2: Container(
-   color:  Colors.blue ,
-   width: 100  ,height: 100 ,
- ),
-                   child1: Container(
-                     color:  Colors.green ,
-                 width: 100  ,height: 100 ,
-               )),
-             )
-             ,MaterialButton(onPressed: (){
+
+             MaterialButton(onPressed: (){
 setState(() {
   setanim = true;
   setcolors =!setcolors;

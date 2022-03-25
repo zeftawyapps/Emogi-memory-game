@@ -32,15 +32,13 @@ class  CardClick extends GameStart implements   GameStatus  {
 }
 class  WaitToResult extends GameStart implements   GameStatus {
 }
-class  Result extends GameStart implements   GameStatus {
+class  ResultCurrect extends GameStart implements   GameStatus {
+
+}
+class  ResultWrong extends GameStart implements   GameStatus {
 
 }
 class  ResultDone extends GameStart implements   GameStatus  {
 
 }
-mixin CardCurrect implements GameStatus {
 
-}
-mixin CardWrang implements GameStatus {
-
-}

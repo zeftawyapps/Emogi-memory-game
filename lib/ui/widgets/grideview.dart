@@ -29,7 +29,7 @@ class _GameGridViewState extends State<GameGridView> {
               gameCubit:  widget .gameCubit ,
                 cardModule: widget.gameCubit.cards[i],
                 cardclicked: (card) {
-                  widget.gameCubit.Clik(card , i ) ;
+                  widget.gameCubit.clik(card, i)  ;
                 },
                 fontSize: size);
           }),
