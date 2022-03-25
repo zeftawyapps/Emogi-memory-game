@@ -78,7 +78,7 @@ backgroundColor: Colors.transparent,
 
 gameProvider.setwining();
 
-                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (c)=>Game_Sreen()  ) );
+                                  // Navigator.pushReplacement(context, MaterialPageRoute(builder: (c)=>Game_Sreen()  ) );
 
 
                               }
@@ -100,7 +100,7 @@ gameProvider.setwining();
                                   gameProvider.game() ;
                                   sharedPreferences.setInt( sharedStages , g +1 ) ;
 
-                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (c)=>Game_Sreen()  ) );
+                                  // Navigator.pushReplacement(context, MaterialPageRoute(builder: (c)=>GameSreen()  ) );
 
 
                                 }
