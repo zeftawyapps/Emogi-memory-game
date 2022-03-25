@@ -7,7 +7,7 @@ part of 'game_cubit.dart';
    }
 
 }
-
+abstract class GameResults {}
 class GameLoading  implements GameStatus {
 
 }
@@ -32,10 +32,12 @@ class  CardClick extends GameStart implements   GameStatus  {
 }
 class  WaitToResult extends GameStart implements   GameStatus {
 }
-class  ResultCurrect extends GameStart implements   GameStatus {
+class  ResultCurrect extends GameStart implements   GameStatus
+,GameResults
+{
 
 }
-class  ResultWrong extends GameStart implements   GameStatus {
+class  ResultWrong extends GameStart implements   GameStatus ,  GameResults{
 
 }
 class  ResultDone extends GameStart implements   GameStatus  {

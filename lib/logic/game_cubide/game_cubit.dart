@@ -5,6 +5,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:memory_game/logic/game_contraller.dart';
+import 'package:memory_game/logic/game_cubide/on_click_card.dart';
 import 'package:memory_game/logic/imgvalues.dart';
 import 'package:memory_game/logic/mylibs/modulscreateor.dart';
 import 'package:memory_game/logic/mylibs/stagesmodule.dart';
@@ -20,9 +21,9 @@ class GameCubit extends Cubit<GameStatus> {
   StagesModule stagesManager = StagesModule();
 
   late SharedPreferences sharedPreferences;
-  int? _helpAddTryis, _helpAddCurrectCard;
+  int? helpAddTryis  = 20  ;  int?  helpAddCurrectCard = 20 ;
   int _cardnum = 2;
-  int _gamelevle = 1;
+  int gamelevle = 1;
   int _lastno = 0;
   int _lastitemno = 10;
   List<String> valuesCards = [];
@@ -31,7 +32,8 @@ class GameCubit extends Cubit<GameStatus> {
   int _imagelevel = 0;
   int colomesno = 2;
   int _counter = 0;
-  CardModule? card1, card2;
+  CardModule? card1, card2;// tra
+ONClickCard onClickCard  = ONClickCard();
   int _defultlevel = 1;
   int _defulthelpers = 20;
   void gameInit() async {
@@ -47,15 +49,15 @@ class GameCubit extends Cubit<GameStatus> {
     colomesno = _getDatafromjson(stagesManager.colomesno);
 
     gameConraller = GameConraller(
-        gamelevle: _gamelevle,
+        gamelevle: gamelevle,
         cardnum: _cardnum,
         imagelevel: _imagelevel,
         lastitemno: _lastitemno,
         colomesno: colomesno,
-        myscors: 0,
+        scors: 0,
         trayes: _settryies(),
-        helpAddTryis: _helpAddTryis ?? 20,
-        helpAddCurrectCard: _helpAddCurrectCard ?? 20);
+        helpAddTryis: helpAddTryis ?? 20,
+        helpAddCurrectCard: helpAddCurrectCard ?? 20);
 
     imagesvalues = _getimagLevel(0);
     _randomchosing();
@@ -73,15 +75,15 @@ class GameCubit extends Cubit<GameStatus> {
     colomesno = _getDatafromjson(stagesManager.colomesno);
 
     gameConraller = GameConraller(
-        gamelevle: _gamelevle,
+        gamelevle: gamelevle,
         cardnum: _cardnum,
         imagelevel: _imagelevel,
         lastitemno: _lastitemno,
         colomesno: colomesno,
-        myscors: 0,
+        scors: 0,
         trayes: _settryies(),
-        helpAddTryis: _helpAddTryis ?? 20,
-        helpAddCurrectCard: _helpAddCurrectCard ?? 20);
+        helpAddTryis: helpAddTryis ?? _defulthelpers,
+        helpAddCurrectCard: helpAddCurrectCard ?? _defulthelpers);
     // imagesvalues.clear() ;
     imagesvalues = _getimagLevel(0);
     _randomchosing();
@@ -95,6 +97,8 @@ class GameCubit extends Cubit<GameStatus> {
   }
 
   void clik(CardModule card, int i) {
+    gameConraller.trayes -- ;
+
     emit(CardRotat());
     cards[i].isclicked = true;
     cards[i].result = IS_CHOSSED;
@@ -108,12 +112,12 @@ class GameCubit extends Cubit<GameStatus> {
           if (_matching(card1!.imagesv, card2!.imagesv)) {
             _currect();
             _counter = 0;
+            gameConraller.scors ++ ;
             emit(ResultCurrect());
           } else {
             _warng();
             _counter = 0;
-
-            emit(ResultWrong());
+             emit(ResultWrong());
           }
         });
       } else {
@@ -121,6 +125,9 @@ class GameCubit extends Cubit<GameStatus> {
         emit(CardClick());
       }
     });
+
+
+
   }
 
   void resultDone(CardModule c) {
@@ -133,7 +140,7 @@ class GameCubit extends Cubit<GameStatus> {
   }
 
   dynamic _getDatafromjson(Cell c) {
-    return stagesManager.dataTable[_gamelevle - 1].getvalue(c);
+    return stagesManager.dataTable[gamelevle - 1].getvalue(c);
   }
 
   bool _matching(String c, String c1) {
@@ -156,17 +163,17 @@ class GameCubit extends Cubit<GameStatus> {
 
   Future _loadSavedData() async {
     sharedPreferences = await SharedPreferences.getInstance();
-    _gamelevle = sharedPreferences.getInt(sharedStages) ?? _defultlevel;
-    _helpAddTryis = sharedPreferences.getInt(sharedhelpadd) ?? _defulthelpers;
-    _helpAddCurrectCard =
+    gamelevle = sharedPreferences.getInt(sharedStages) ?? _defultlevel;
+    helpAddTryis = sharedPreferences.getInt(sharedhelpadd) ?? _defulthelpers;
+    helpAddCurrectCard =
         sharedPreferences.getInt(sharedhelpcurrect) ?? _defulthelpers;
   }
 
   int _settryies() {
-    if (_gamelevle < 50) {
+    if (gamelevle < 50) {
       return _cardnum * 3;
     }
-    if (_gamelevle > 50 && _gamelevle < 70) {
+    if (gamelevle > 50 && gamelevle < 70) {
       return _cardnum * 3 - 5;
     }
 
@@ -261,4 +268,8 @@ class GameCubit extends Cubit<GameStatus> {
     }
     return 10;
   }
+
+
+
+
 }

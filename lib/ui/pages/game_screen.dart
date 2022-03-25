@@ -46,7 +46,7 @@ late   GameCubit gameCubit ;
          buildWhen: (p,c)=>p!=c ,
          builder: (context , s ) {
              // s is CardClick ||s is CardRotat || s is WaitToResult || s is Result || s is ResultDone
-          if (s is GameLoading || s is GameStart){
+          if (s is GameLoading || s is GameStart ){
             return  BacgGame(Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -153,7 +153,7 @@ late   GameCubit gameCubit ;
 
                          child: Column(children: [
                            Text('المستوى',style: Theme.of(context).primaryTextTheme.bodyText1),
-                           Text("5",style: Theme.of(context).primaryTextTheme.bodyText1)
+                           Text(gameCubit.gamelevle.toString(),style: Theme.of(context).primaryTextTheme.bodyText1)
 
                          ],),),
                      )
@@ -163,7 +163,7 @@ late   GameCubit gameCubit ;
 
                          child: Column(children: [
                            Text('محاولات',style: Theme.of(context).primaryTextTheme.bodyText2),
-                           Text("5",style: Theme.of(context).primaryTextTheme.bodyText1)
+                           Text( gameCubit.gameConraller.trayes.toString() ,style: Theme.of(context).primaryTextTheme.bodyText1)
 
                          ],),),
                      )
@@ -174,7 +174,7 @@ late   GameCubit gameCubit ;
 
                          child: Column(children: [
                            Text('نتيجة',style: Theme.of(context).primaryTextTheme.bodyText1),
-                           Text("10" ,style: Theme.of(context).primaryTextTheme.bodyText1)
+                           Text( gameCubit.gameConraller.scors.toString() ,style: Theme.of(context).primaryTextTheme.bodyText1)
 
                          ],),),
                      )

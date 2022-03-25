@@ -10,11 +10,10 @@ class GameConraller{
   int imagelevel = 3;
   int lastitemno = 10;
   int colomesno =3;
-  int myscors = 0;
+  int scors = 0;
   int trayes = 48;
   int helpAddTryis= 20;
   int helpAddCurrectCard= 10;
-  int scores = 0 ;
 
   GameConraller(
       { required  this.gamelevle,
@@ -22,7 +21,7 @@ class GameConraller{
     required   this.imagelevel,
     required   this.lastitemno,
     required   this.colomesno,
-    required   this.myscors,
+    required   this.scors,
    required    this.trayes,
    required    this.helpAddTryis,
    required    this.helpAddCurrectCard,
