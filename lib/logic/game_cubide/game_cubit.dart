@@ -21,7 +21,7 @@ class GameCubit extends Cubit<GameStatus> {
   StagesModule stagesManager = StagesModule();
 
   late SharedPreferences sharedPreferences;
-  int? helpAddTryis  = 20  ;  int?  helpAddCurrectCard = 20 ;
+  int  helpAddTryis  = 20  ;  int   helpAddCurrectCard = 20 ;
   int _cardnum = 2;
   int gamelevle = 1;
   int _lastno = 0;
@@ -129,7 +129,13 @@ ONClickCard onClickCard  = ONClickCard();
 
 
   }
-
+  void helpAdd(){
+  gameConraller.  trayes = gameConraller.  trayes  +10 ;
+    helpAddTryis = helpAddTryis - 1 ;
+    sharedPreferences.setInt(sharedhelpadd , helpAddTryis);
+    if (helpAddTryis == 0){return ; }
+ emit(HelpAdd());
+  }
   void resultDone(CardModule c) {
     if (cards[c.cardno].result == MATCHED) {
       emit(ResultDone());

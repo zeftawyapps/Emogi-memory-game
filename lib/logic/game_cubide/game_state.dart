@@ -21,7 +21,7 @@ class HelpCorroct extends GameStart implements GameStatus {
 
 }
 
-mixin HelpAdd implements GameStatus {
+class HelpAdd extends GameStart   implements GameStatus {
 
 }
 class  CardRotat extends GameStart implements   GameStatus {

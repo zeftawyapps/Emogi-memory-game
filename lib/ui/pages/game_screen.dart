@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:memory_game/logic/game_cubide/game_cubit.dart';
 import 'package:memory_game/ui/widgets/grideview.dart';
 
@@ -17,7 +20,9 @@ import '../widgets/gameicons_icons.dart';
 
  class _GameScreenState extends State<GameScreen> {
 late   GameCubit gameCubit ;
-
+bool currect = false ;
+bool wrong  = false ;
+bool helpadd = false ;
    @override
   void initState() {
     // TODO: implement initState
@@ -41,7 +46,43 @@ late   GameCubit gameCubit ;
      child: Scaffold(
        body: BlocConsumer<GameCubit , GameStatus>(
            listenWhen: (p,c)=>p!=c ,
-         listener: (c , s ){},
+         listener: (c , s ){
+if (s is ResultCurrect){
+  setState(() {
+    currect = true ;
+
+  });
+  Timer(Duration(milliseconds: 500),(){
+    setState(() {
+currect = false ;
+    });
+  });
+
+}
+if (s is ResultWrong){
+  setState(() {
+    wrong = true ;
+
+  });
+  Timer(Duration(milliseconds: 500),(){
+    setState(() {
+      wrong = false ;
+    });
+  });
+
+}
+if (s is HelpAdd){
+  setState(() {
+    helpadd = true ;
+
+  });
+  Timer(Duration(milliseconds: 500),(){
+    setState(() {
+      helpadd = false ;
+    });
+  });
+}
+         },
          bloc: gameCubit,
          buildWhen: (p,c)=>p!=c ,
          builder: (context , s ) {
@@ -123,7 +164,7 @@ late   GameCubit gameCubit ;
                          child: Stack(children: [
                            GestureDetector(
                              onTap: (){
-                               // gamep.helpAdd();
+                             gameCubit.helpAdd();
                                },
                              child: Container(
                                decoration: BoxDecoration(color:
@@ -138,7 +179,7 @@ late   GameCubit gameCubit ;
                                  mainAxisAlignment: MainAxisAlignment.center,
                                  children: [
                                    Icon(Icons.add,color: Colors.white ,size:28  ,),
-                                   Text( "0" ,style: Theme.of(context).primaryTextTheme.bodyText1)
+                                   Text(  gameCubit.helpAddTryis.toString() ,style: Theme.of(context).primaryTextTheme.bodyText1)
 
                                  ],),
                              ),),
@@ -152,29 +193,35 @@ late   GameCubit gameCubit ;
                        child: Container(
 
                          child: Column(children: [
-                           Text('المستوى',style: Theme.of(context).primaryTextTheme.bodyText1),
-                           Text(gameCubit.gamelevle.toString(),style: Theme.of(context).primaryTextTheme.bodyText1)
+                           Text('level ',style: Theme.of(context).primaryTextTheme.headline6),
+                           Text(gameCubit.gamelevle.toString(),style: Theme.of(context).primaryTextTheme.headline6)
 
                          ],),),
                      )
                      , Expanded(flex: 1,
-                       child: Container(
+                       child: AnimatedContainer(
+                         duration: Duration(milliseconds: 200),
+                         color: helpadd?Colors.green[700] :Colors.transparent,
 
+                         child: AnimatedContainer(
+duration: Duration(milliseconds: 200),
+color: wrong?Colors.red[700] :Colors.transparent,
+                           child: Column(children: [
+                             Text('attempts',style: Theme.of(context).primaryTextTheme.headline6),
+                             Text( gameCubit.gameConraller.trayes.toString() ,style: Theme.of(context).primaryTextTheme.headline5)
 
-                         child: Column(children: [
-                           Text('محاولات',style: Theme.of(context).primaryTextTheme.bodyText2),
-                           Text( gameCubit.gameConraller.trayes.toString() ,style: Theme.of(context).primaryTextTheme.bodyText1)
-
-                         ],),),
+                           ],),),
+                       ),
                      )
 
                      ,   Expanded(flex: 1,
-                       child: Container(
-
+                       child: AnimatedContainer(
+duration: Duration(milliseconds: 200),
+                         color: currect? Colors.green :Colors.transparent ,
 
                          child: Column(children: [
-                           Text('نتيجة',style: Theme.of(context).primaryTextTheme.bodyText1),
-                           Text( gameCubit.gameConraller.scors.toString() ,style: Theme.of(context).primaryTextTheme.bodyText1)
+                           Text('scores',style: Theme.of(context).primaryTextTheme.headline6),
+                           Text( gameCubit.gameConraller.scors.toString() ,style: Theme.of(context).primaryTextTheme.headline5)
 
                          ],),),
                      )
@@ -182,7 +229,31 @@ late   GameCubit gameCubit ;
                  ) ,
 
                  Expanded(child:Stack(children: [
-GameGridView(gameCubit: gameCubit)
+
+                   GameGridView(gameCubit: gameCubit) ,
+
+                   Positioned(
+                       right: 0,
+                       child: AnimatedOpacity(
+                           duration:  Duration(milliseconds: 200),
+                           opacity: currect ?1:0,
+                           child: Text("1+",style:  TextStyle(fontSize: 70 , color:  Colors.green),))),
+
+                   Positioned(
+                       right : 100,
+                       child: AnimatedOpacity(
+                           duration:  Duration(milliseconds: 200),
+                           opacity: helpadd ?1:0,
+                           child: Text("10+",style:  TextStyle(fontSize: 70 , color:  Colors.green),))),
+
+
+                   Positioned(
+                       right: 100.w,
+                       child: AnimatedOpacity(
+                           duration:  Duration(milliseconds: 200),
+                           opacity: wrong ?1:0,
+                           child: Text("2-",style:  TextStyle(fontSize: 70 , color:  Colors.red[700]),))),
+
                  ],) ),
                  Container(height: 40,)
                ],
@@ -205,8 +276,6 @@ GameGridView(gameCubit: gameCubit)
 
      );
    }
-
-
 
 
 
