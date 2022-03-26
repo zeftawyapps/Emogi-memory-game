@@ -2,8 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import 'gamescreen.dart';
- class Relaodscrean extends StatefulWidget {
+  class Relaodscrean extends StatefulWidget {
   const Relaodscrean({Key? key}) : super(key: key);
 
   @override

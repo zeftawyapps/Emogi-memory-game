@@ -306,4 +306,14 @@ class GameCubit extends Cubit<GameStatus> {
       });
     }
   }
+
+
+void switchGameOver(){
+ if (   gameConraller.isGameWin())
+   emit(Winner());
+ if (   gameConraller.isGameLoss())
+   emit(Losser());
+
+}
+
 }

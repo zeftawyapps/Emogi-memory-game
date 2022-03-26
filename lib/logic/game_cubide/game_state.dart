@@ -45,4 +45,10 @@ class  ResultWrong extends GameStart implements   GameStatus ,  GameResults{
 class  ResultDone extends GameStart implements   GameStatus  {
 
 }
+class  Winner extends GameStart implements   GameStatus  {
 
+}
+
+class  Losser extends GameStart implements   GameStatus  {
+
+}

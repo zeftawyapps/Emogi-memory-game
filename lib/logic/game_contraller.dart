@@ -1,5 +1,3 @@
-import 'package:memory_game/logic/imgvalues.dart';
-import 'package:memory_game/logic/mylibs/stagesmodule.dart';
 
 class GameConraller{
 
@@ -26,4 +24,11 @@ class GameConraller{
    required    this.helpAddTryis,
    required    this.helpAddCurrectCard,
      });
+
+  bool isGameWin(){
+    return scors == cardnum ;
+  }
+  bool isGameLoss(){
+    return trayes == 0 ;
+  }
 }

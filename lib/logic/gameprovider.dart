@@ -4,13 +4,13 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:memory_game/logic/game_cubide/game_cubit.dart';
 import 'package:memory_game/logic/mylibs/modulscreateor.dart';
 import 'package:memory_game/logic/mylibs/stagesmodule.dart';
  import 'package:memory_game/logic/values.dart';
  import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../ui/pages/old/gameresulte.dart';
-import 'imgvalues.dart';
+ import 'imgvalues.dart';
 
 class GameProvider extends ChangeNotifier {
   List<String> valuesCards = [];
@@ -208,39 +208,7 @@ cards[i].state = 1 ;
      }
   List< CardModule > cardscurrect =  [];
 
-  void helpcurect( BuildContext context ){
-
-    hacurrectcard --;
-    sharedPreferences.setInt(sharedhelpcurrect , hacurrectcard);
-if (hacurrectcard == 0){hcurrectfinneshed = true; }else {hcurrectfinneshed = false;}
-    if (counter ==1){
-    String s =   cards[clicki1].imagesv;
-cardscurrect =   cards.where((element) => element.imagesv == s ).toList();
-
-    cards [cardscurrect[0].cardno].state = 1;
-    cards [cardscurrect[1].cardno].state = 1;
-   Timer  _timer = new Timer.periodic(  Duration(seconds: 1 )
-
- ,    (Timer timer) {
-
-
-         cards [cardscurrect[0].cardno].state = 2;
-         cards [cardscurrect[1].cardno].state = 2;
-          scoresadd1();
-          if  (  winning()){
-            showDialog(
-                barrierDismissible: false ,
-                context: context, builder: (context){
-
-              return GameResult();
-            });
-    }
-         timer.cancel();
-           counter =0 ;
-  });  }
-    notifyListeners();
-  }
-restartgame(){
+ restartgame(){
     for(int i =0 ; i<cards.length;i++  ){
      cards[i].state = 0;
 
