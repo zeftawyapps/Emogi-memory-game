@@ -21,9 +21,10 @@ class GameCubit extends Cubit<GameStatus> {
   StagesModule stagesManager = StagesModule();
 
   late SharedPreferences sharedPreferences;
-  int  helpAddTryis  = 20  ;  int   helpAddCurrectCard = 20 ;
+  int helpAddTryis = 20;
+  int helpAddCurrectCard = 20;
   int _cardnum = 2;
-  int gamelevle = 1;
+  int gamelevle = 31;
   int _lastno = 0;
   int _lastitemno = 10;
   List<String> valuesCards = [];
@@ -32,10 +33,12 @@ class GameCubit extends Cubit<GameStatus> {
   int _imagelevel = 0;
   int colomesno = 2;
   int _counter = 0;
-  CardModule? card1, card2;// tra
-ONClickCard onClickCard  = ONClickCard();
-  int _defultlevel = 1;
-  int _defulthelpers = 20;
+  CardModule? card1, card2; // tra
+  ONClickCard onClickCard = ONClickCard();
+  int _defultlevel = 44;
+  int _defulthelpersAdd = 20;
+  int _defulthelpersCurrect = 10;
+
   void gameInit() async {
     await stagesManager.laodnig();
 
@@ -82,8 +85,8 @@ ONClickCard onClickCard  = ONClickCard();
         colomesno: colomesno,
         scors: 0,
         trayes: _settryies(),
-        helpAddTryis: helpAddTryis ?? _defulthelpers,
-        helpAddCurrectCard: helpAddCurrectCard ?? _defulthelpers);
+        helpAddTryis: helpAddTryis  ,
+        helpAddCurrectCard: helpAddCurrectCard  );
     // imagesvalues.clear() ;
     imagesvalues = _getimagLevel(0);
     _randomchosing();
@@ -97,7 +100,7 @@ ONClickCard onClickCard  = ONClickCard();
   }
 
   void clik(CardModule card, int i) {
-    gameConraller.trayes -- ;
+    gameConraller.trayes--;
 
     emit(CardRotat());
     cards[i].isclicked = true;
@@ -112,30 +115,31 @@ ONClickCard onClickCard  = ONClickCard();
           if (_matching(card1!.imagesv, card2!.imagesv)) {
             _currect();
             _counter = 0;
-            gameConraller.scors ++ ;
+            gameConraller.scors++;
             emit(ResultCurrect());
           } else {
             _warng();
             _counter = 0;
-             emit(ResultWrong());
+            emit(ResultWrong());
           }
         });
       } else {
         card1 = cards[i];
-        emit(CardClick());
+        emit(ClickedCard1());
       }
     });
-
-
-
   }
-  void helpAdd(){
-  gameConraller.  trayes = gameConraller.  trayes  +10 ;
-    helpAddTryis = helpAddTryis - 1 ;
-    sharedPreferences.setInt(sharedhelpadd , helpAddTryis);
-    if (helpAddTryis == 0){return ; }
- emit(HelpAdd());
+
+  void helpAdd() {
+    gameConraller.trayes = gameConraller.trayes + 10;
+    helpAddTryis = helpAddTryis - 1;
+    sharedPreferences.setInt(sharedhelpadd, helpAddTryis);
+    if (helpAddTryis == 0) {
+      return;
+    }
+    emit(HelpAdd());
   }
+
   void resultDone(CardModule c) {
     if (cards[c.cardno].result == MATCHED) {
       emit(ResultDone());
@@ -170,9 +174,9 @@ ONClickCard onClickCard  = ONClickCard();
   Future _loadSavedData() async {
     sharedPreferences = await SharedPreferences.getInstance();
     gamelevle = sharedPreferences.getInt(sharedStages) ?? _defultlevel;
-    helpAddTryis = sharedPreferences.getInt(sharedhelpadd) ?? _defulthelpers;
+    helpAddTryis = sharedPreferences.getInt(sharedhelpadd) ?? _defulthelpersAdd;
     helpAddCurrectCard =
-        sharedPreferences.getInt(sharedhelpcurrect) ?? _defulthelpers;
+        sharedPreferences.getInt(sharedhelpcurrect) ?? _defulthelpersCurrect;
   }
 
   int _settryies() {
@@ -246,18 +250,18 @@ ONClickCard onClickCard  = ONClickCard();
         if (_cardnum == 6) {
           return 1.3;
         } else {
-          return 1.75;
+          return 1.6;
         }
       case 3:
         return 1.2;
       case 4:
         switch (_cardnum) {
           case 20:
-            return 1.1;
+            return 1.0;
           case 24:
-            return 1.3;
+            return 1.2;
           case 28:
-            return 1.5;
+            return 1.75;
         }
     }
     return 1.30;
@@ -270,12 +274,36 @@ ONClickCard onClickCard  = ONClickCard();
       case 3:
         return 40.sp;
       case 4:
-        return 30.sp;
+        return 25.sp;
     }
     return 10;
   }
 
+  void helpcurect( ) {
+    gameConraller.helpAddCurrectCard--;
+    sharedPreferences.setInt(
+        sharedhelpcurrect, gameConraller.helpAddCurrectCard);
+    if (gameConraller.helpAddCurrectCard == 0) {
+      return;
+    }
+    if (_counter == 1) {
+      String s = card1!.imagesv;
+      var cardscurrect =
+          cards.where((element) => element.imagesv == s).toList();
 
+      cards[cardscurrect[0].cardno].result = IS_CHOSSED;
+      cards[cardscurrect[1].cardno].result = IS_CHOSSED;
+      card1 = cards[cardscurrect[0].cardno];
+      card2 = cards[cardscurrect[1].cardno];
+      emit(HelpCorroct());
+        Timer(Duration(milliseconds: 500), () {
 
+        _currect();
+        _counter = 0;
 
+        gameConraller.scors++;
+        emit(ResultCurrect());
+      });
+    }
+  }
 }

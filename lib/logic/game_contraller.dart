@@ -5,9 +5,9 @@ class GameConraller{
 
 
 
-  int gamelevle = 15 ;
+  int gamelevle = 20 ;
   int cardnum =12;
-  int imagelevel = 3;
+  int imagelevel = 50;
   int lastitemno = 10;
   int colomesno =3;
   int scors = 0;

@@ -18,6 +18,7 @@ class _GameGridViewState extends State<GameGridView> {
 
     return Container(
       child: GridView.builder(
+        physics: NeverScrollableScrollPhysics(),
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: widget.gameCubit.gameConraller.colomesno,
               childAspectRatio: widget.gameCubit.aspectretio()),

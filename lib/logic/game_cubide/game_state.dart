@@ -27,9 +27,11 @@ class HelpAdd extends GameStart   implements GameStatus {
 class  CardRotat extends GameStart implements   GameStatus {
 
 }
-class  CardClick extends GameStart implements   GameStatus  {
+class  ClickedCard1 extends GameStart implements   GameStatus  {
 
 }
+
+
 class  WaitToResult extends GameStart implements   GameStatus {
 }
 class  ResultCurrect extends GameStart implements   GameStatus
