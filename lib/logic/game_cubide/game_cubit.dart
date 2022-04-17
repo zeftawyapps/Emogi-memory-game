@@ -36,7 +36,7 @@ class GameCubit extends Cubit<GameStatus> {
   int _counter = 0;
   CardModule? card1, card2; // tra
   ONClickCard onClickCard = ONClickCard();
-  int _defultlevel = 43;
+  int _defultlevel = 5;
   int _defulthelpersAdd = 20;
   int _defulthelpersCurrect = 10;
 
