@@ -7,7 +7,9 @@
       "imagelevel": 2,
       "lastitemno": 0,
       "finsed" : false,
-      "imageslevel": 0    },
+      "imagesArray": 0
+
+    },
     {
       "gamelevle": 2,
       "cardnum": 6,
@@ -15,7 +17,7 @@
       "imagelevel": 3,
       "lastitemno": 10,
       "finsed" : false,
-      "imageslevel": 0
+      "imagesArray": 0
     },
     {
       "gamelevle": 3,
@@ -24,7 +26,7 @@
       "imagelevel": 4,
       "lastitemno": 20,
       "finsed" : false,
-      "imageslevel": 0       },
+      "imagesArray": 0       },
     {
       "gamelevle": 4,
       "cardnum": 6,
@@ -32,23 +34,23 @@
       "imagelevel": 2,
       "lastitemno": 30,
       "finsed" : false,
-      "imageslevel": 0       },
+      "imagesArray": 0       },
     {
       "gamelevle": 5,
-      "cardnum": 6,
+      "cardnum": 8,
       "colomesno": 2,
       "imagelevel": 2,
       "lastitemno": 40,
       "finsed" : false,
-      "imageslevel": 0       },
+      "imagesArray": 0       },
     {
       "gamelevle": 6,
-      "cardnum": 6,
+      "cardnum": 8,
       "colomesno": 2,
       "imagelevel": 2,
       "lastitemno": 24,
       "finsed" : false,
-      "imageslevel": 0       },
+      "imagesArray": 0       },
     {
       "gamelevle":7 ,
       "cardnum": 8,
@@ -56,7 +58,7 @@
       "imagelevel": 4,
       "lastitemno": 0,
       "finsed" : false,
-      "imageslevel": 0    },
+      "imagesArray": 0    },
     {
       "gamelevle": 8,
       "cardnum": 8,
@@ -64,7 +66,7 @@
       "imagelevel": 4,
       "lastitemno": 6,
       "finsed" : false,
-      "imageslevel": 0
+      "imagesArray": 0
     },
     {
       "gamelevle": 9,
@@ -73,7 +75,7 @@
       "imagelevel":4,
       "lastitemno": 12,
       "finsed" : false,
-      "imageslevel": 0       },
+      "imagesArray": 0       },
     {
       "gamelevle": 10,
       "cardnum": 8,
@@ -81,7 +83,7 @@
       "imagelevel": 4,
       "lastitemno": 15,
       "finsed" : false,
-      "imageslevel": 0       },
+      "imagesArray": 0       },
     {
       "gamelevle": 11,
       "cardnum": 8,
@@ -89,40 +91,40 @@
       "imagelevel": 4,
       "lastitemno": 20,
       "finsed" : false,
-      "imageslevel": 0       },
+      "imagesArray": 0       },
     {
       "gamelevle": 12,
-      "cardnum": 8,
-      "colomesno": 2,
+      "cardnum": 12,
+      "colomesno": 3,
       "imagelevel": 4,
       "lastitemno": 24,
       "finsed" : false,
-      "imageslevel": 0       },
+      "imagesArray": 0       },
     {
       "gamelevle": 13,
-      "cardnum": 8,
-      "colomesno": 2,
+      "cardnum": 12,
+      "colomesno": 3,
       "imagelevel": 10,
       "lastitemno": 0,
       "finsed" : false,
-      "imageslevel": 0    },
+      "imagesArray": 0    },
     {
       "gamelevle": 14,
-      "cardnum": 8,
-      "colomesno": 2,
+      "cardnum": 12,
+      "colomesno": 3,
       "imagelevel": 10,
       "lastitemno": 6,
       "finsed" : false,
-      "imageslevel": 0
+      "imagesArray": 0
     },
     {
       "gamelevle": 15,
-      "cardnum": 8,
-      "colomesno": 2,
+      "cardnum": 12,
+      "colomesno": 3,
       "imagelevel": 10,
       "lastitemno": 12,
       "finsed" : false,
-      "imageslevel": 0       },
+      "imagesArray": 0       },
     {
       "gamelevle": 16,
       "cardnum": 12,
@@ -130,7 +132,7 @@
       "imagelevel": 10,
       "lastitemno": 15,
       "finsed" : false,
-      "imageslevel": 0       },
+      "imagesArray": 0       },
     {
       "gamelevle": 17,
       "cardnum": 12,
@@ -138,7 +140,7 @@
       "imagelevel": 10,
       "lastitemno": 20,
       "finsed" : false,
-      "imageslevel": 0       },
+      "imagesArray": 0       },
     {
       "gamelevle": 18,
       "cardnum": 12,
@@ -146,7 +148,7 @@
       "imagelevel": 10,
       "lastitemno": 24,
       "finsed" : false,
-      "imageslevel": 0       },
+      "imagesArray": 0       },
     {
       "gamelevle": 19,
       "cardnum": 12,
@@ -154,7 +156,7 @@
       "imagelevel": 20,
       "lastitemno": 0,
       "finsed" : false,
-      "imageslevel": 0    },
+      "imagesArray": 0    },
     {
       "gamelevle": 20,
       "cardnum": 12,
@@ -162,7 +164,7 @@
       "imagelevel": 20,
       "lastitemno": 6,
       "finsed" : false,
-      "imageslevel": 0
+      "imagesArray": 0
     },
     {
       "gamelevle": 21,
@@ -171,7 +173,7 @@
       "imagelevel": 20,
       "lastitemno": 12,
       "finsed" : false,
-      "imageslevel": 0       },
+      "imagesArray": 0       },
     {
       "gamelevle": 22,
       "cardnum": 20,
@@ -179,7 +181,7 @@
       "imagelevel": 20,
       "lastitemno": 15,
       "finsed" : false,
-      "imageslevel": 0       },
+      "imagesArray": 0       },
     {
       "gamelevle": 23,
       "cardnum": 20,
@@ -187,7 +189,7 @@
       "imagelevel": 20,
       "lastitemno": 40,
       "finsed" : false,
-      "imageslevel": 0       },
+      "imagesArray": 0       },
     {
       "gamelevle": 24,
       "cardnum": 6,
@@ -195,7 +197,7 @@
       "imagelevel": 20,
       "lastitemno": 60,
       "finsed" : false,
-      "imageslevel": 0       },
+      "imagesArray": 0       },
     {
       "gamelevle": 25,
       "cardnum": 24,
@@ -203,7 +205,7 @@
       "imagelevel": 10,
       "lastitemno": 80,
       "finsed" : false,
-      "imageslevel": 0    },
+      "imagesArray": 0    },
     {
       "gamelevle": 26,
       "cardnum": 24,
@@ -211,7 +213,7 @@
       "imagelevel": 9,
       "lastitemno": 100,
       "finsed" : false,
-      "imageslevel": 0
+      "imagesArray": 0
     },
     {
       "gamelevle": 27,
@@ -220,7 +222,7 @@
       "imagelevel": 15,
       "lastitemno": 12,
       "finsed" : false,
-      "imageslevel": 0       },
+      "imagesArray": 0       },
     {
       "gamelevle": 28,
       "cardnum": 6,
@@ -228,7 +230,7 @@
       "imagelevel": 2,
       "lastitemno": 15,
       "finsed" : false,
-      "imageslevel": 0       },
+      "imagesArray": 0       },
     {
       "gamelevle": 29,
       "cardnum": 24,
@@ -236,7 +238,7 @@
       "imagelevel": 2,
       "lastitemno": 20,
       "finsed" : false,
-      "imageslevel": 0       },
+      "imagesArray": 0       },
     {
       "gamelevle": 30,
       "cardnum": 24,
@@ -244,7 +246,7 @@
       "imagelevel": 2,
       "lastitemno": 50,
       "finsed" : false,
-      "imageslevel": 0       },
+      "imagesArray": 0       },
     {
       "gamelevle": 31,
       "cardnum": 24,
@@ -252,7 +254,7 @@
       "imagelevel": 2,
       "lastitemno": 50,
       "finsed" : false,
-      "imageslevel": 0    },
+      "imagesArray": 0    },
     {
       "gamelevle": 32,
       "cardnum": 24,
@@ -260,7 +262,7 @@
       "imagelevel": 7,
       "lastitemno": 50,
       "finsed" : false,
-      "imageslevel": 0
+      "imagesArray": 0
     },
     {
       "gamelevle": 33,
@@ -269,7 +271,7 @@
       "imagelevel": 7,
       "lastitemno": 70,
       "finsed" : false,
-      "imageslevel": 0       },
+      "imagesArray": 0       },
     {
       "gamelevle": 34,
       "cardnum": 24,
@@ -277,7 +279,7 @@
       "imagelevel": 9,
       "lastitemno": 80,
       "finsed" : false,
-      "imageslevel": 0       },
+      "imagesArray": 0       },
     {
       "gamelevle": 35,
       "cardnum": 6,
@@ -285,7 +287,7 @@
       "imagelevel": 2,
       "lastitemno": 100,
       "finsed" : false,
-      "imageslevel": 0       },
+      "imagesArray": 0       },
     {
       "gamelevle": 36,
       "cardnum": 8,
@@ -293,7 +295,7 @@
       "imagelevel": 2,
       "lastitemno": 100,
       "finsed" : false,
-      "imageslevel": 0       },
+      "imagesArray": 0       },
     {
       "gamelevle": 37,
       "cardnum": 8,
@@ -301,7 +303,7 @@
       "imagelevel": 2,
       "lastitemno": 100,
       "finsed" : false,
-      "imageslevel": 0    },
+      "imagesArray": 0    },
     {
       "gamelevle": 38,
       "cardnum": 12,
@@ -309,59 +311,56 @@
       "imagelevel": 2,
       "lastitemno": 120,
       "finsed" : false,
-      "imageslevel": 0
+      "imagesArray": 0
     },
     {
       "gamelevle": 39,
       "cardnum": 12,
       "colomesno": 3,
       "imagelevel": 6,
-      "lastitemno": 130,
+      "lastitemno": 120,
       "finsed" : false,
-      "imageslevel": 0       },
+      "imagesArray": 0       },
     {
       "gamelevle": 40,
       "cardnum": 6,
       "colomesno": 2,
       "imagelevel": 2,
-      "lastitemno": 130,
+      "lastitemno": 120,
       "finsed" : false,
-      "imageslevel": 0       },
+      "imagesArray": 0       },
     {
       "gamelevle": 41,
       "cardnum": 8,
       "colomesno": 2,
       "imagelevel": 2,
-      "lastitemno": 130,
+      "lastitemno": 120,
       "finsed" : false,
-      "imageslevel": 0       },
+      "imagesArray": 0       },
     {
       "gamelevle": 42,
       "cardnum": 12,
       "colomesno": 3,
       "imagelevel": 2,
-      "lastitemno": 130,
+      "lastitemno": 120,
       "finsed" : false,
-      "finsed" : false,
-      "imageslevel": 0       },
+      "imagesArray": 0       },
     {
       "gamelevle": 43,
       "cardnum": 20,
       "colomesno": 4,
       "imagelevel": 2,
-      "lastitemno": 130,
+      "lastitemno": 120,
       "finsed" : false,
-      "finsed" : false,
-      "imageslevel": 0    },
+      "imagesArray": 0    },
     {
       "gamelevle": 44,
       "cardnum": 24,
       "colomesno": 4,
       "imagelevel": 2,
-      "lastitemno": 130,
+      "lastitemno": 0,
       "finsed" : false,
-      "finsed" : false,
-      "imageslevel": 0
+      "imagesArray": 0
     },
     {
       "gamelevle": 45,
@@ -370,7 +369,7 @@
       "imagelevel": 2,
       "lastitemno": 12,
       "finsed" : false,
-      "imageslevel": 0       },
+      "imagesArray": 1       },
     {
       "gamelevle": 46,
       "cardnum": 6,
@@ -378,7 +377,7 @@
       "imagelevel": 2,
       "lastitemno": 15,
       "finsed" : false,
-      "imageslevel": 0       },
+      "imagesArray": 1       },
     {
       "gamelevle": 47,
       "cardnum": 6,
@@ -386,31 +385,31 @@
       "imagelevel": 2,
       "lastitemno": 20,
       "finsed" : false,
-      "imageslevel": 0       },
+      "imagesArray": 1       },
     {
       "gamelevle": 48,
-      "cardnum": 6,
+      "cardnum": 8,
       "colomesno": 2,
       "imagelevel": 2,
       "lastitemno": 24,
       "finsed" : false,
-      "imageslevel": 0       },
+      "imagesArray": 1       },
     {
       "gamelevle": 49,
-      "cardnum": 6,
+      "cardnum": 8,
       "colomesno": 2,
       "imagelevel": 2,
       "lastitemno": 0,
       "finsed" : false,
-      "imageslevel": 0    },
+      "imagesArray": 1    },
     {
       "gamelevle": 50,
-      "cardnum": 6,
+      "cardnum": 8,
       "colomesno": 2,
       "imagelevel": 2,
       "lastitemno": 6,
       "finsed" : false,
-      "imageslevel": 0
+      "imagesArray": 1
     }
 
   ]

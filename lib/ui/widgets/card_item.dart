@@ -42,24 +42,27 @@ class _CardItemState extends State<CardItem> {
         if (s is CardRotat || s is WaitToResult) {
           isNoAction = true;
         }
-        if (s is HelpCorroct){
-          if (!widget.cardModule.isclicked){
-           if (widget.cardModule.result==IS_CHOSSED){
-             annimate = true;
-             isNoAction = true;
-             Timer(Duration(milliseconds: 400), () {
-               setState(() {
-                 annimate = false;
+        if (s is HelpCorroct) {
+          if (!widget.cardModule.isclicked) {
+            if (widget.cardModule.result == IS_CHOSSED) {
+              annimate = true;
+              isNoAction = true;
+              Timer(Duration(milliseconds: 400), () {
+                setState(() {
+                  annimate = false;
 
-                 loadgame = false;
-               });
-             });
-           }
+                  loadgame = false;
+                });
+              });
+            }
           }
-
         }
         if (s is ResultDone || s is ClickedCard1) {
-          isNoAction = false;
+          if (widget.cardModule.result == MATCHED) {
+            isNoAction = true;
+          } else {
+            isNoAction = false;
+          }
         }
         if (s is ResultWrong) {
           if (widget.cardModule.result == WRONG_CHOOSe) {
@@ -89,8 +92,8 @@ class _CardItemState extends State<CardItem> {
         opacity: widget.cardModule.result != MATCHED ? 1.0 : 00.0,
         child: GestureDetector(
             onTap: () {
-              int i ;
-              if (isNoAction) {
+              int i;
+              if (isNoAction || widget.cardModule.result == MATCHED ) {
                 return;
               }
               if (!widget.cardModule.isclicked) {

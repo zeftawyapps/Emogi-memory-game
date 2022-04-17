@@ -9,6 +9,7 @@ class StagesModule extends Module with JsonManger{
   Cell colomesno =Cell('colomesno');
   Cell cardnum =Cell('cardnum');
   Cell imagelevel =Cell('imagelevel');
+  Cell imageArray = Cell("imagesArray");
 
   Cell lastitemno =Cell('lastitemno');
   Cell finsed =Cell('finsed');

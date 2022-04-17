@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:memory_game/logic/game_cubide/game_cubit.dart';
+import 'package:memory_game/ui/pages/gameresulte.dart';
 import 'package:memory_game/ui/widgets/grideview.dart';
 
 import '../values.dart';
@@ -51,6 +52,14 @@ class _GameScreenState extends State<GameScreen> {
                   body: BlocConsumer<GameCubit, GameStatus>(
                       listenWhen: (p, c) => p != c,
                       listener: (c, s) {
+                        if (s is Winner) {
+                          showDialog(context: context, builder:(_){
+
+                            return GameResultDailog();
+                          });
+
+                        }
+                        if (s is Losser) {}
                         if (s is ResultCurrect) {
                           setState(() {
                             currect = true;
@@ -60,6 +69,7 @@ class _GameScreenState extends State<GameScreen> {
                               currect = false;
                             });
                           });
+                          gameCubit.switchGameOver();
                         }
                         if (s is ResultWrong) {
                           setState(() {
@@ -70,6 +80,7 @@ class _GameScreenState extends State<GameScreen> {
                               wrong = false;
                             });
                           });
+                          gameCubit.switchGameOver();
                         }
                         if (s is HelpAdd) {
                           setState(() {
@@ -96,9 +107,7 @@ class _GameScreenState extends State<GameScreen> {
                       builder: (context, s) {
                         // s is CardClick ||s is CardRotat || s is WaitToResult || s is Result || s is ResultDone
                         if (s is GameLoading || s is GameStart) {
-                          return BacgGame(
-                              Column(
-
+                          return BacgGame(Column(
                             children: [
                               Container(
                                 height: 40.h,
@@ -165,8 +174,7 @@ class _GameScreenState extends State<GameScreen> {
                                               decoration: BoxDecoration(
                                                   color: bcbegGamebtn,
                                                   border: Border.all(
-                                                      color:
-                                                          Colors.blueAccent),
+                                                      color: Colors.blueAccent),
                                                   borderRadius:
                                                       BorderRadius.circular(
                                                           10)),
@@ -175,8 +183,7 @@ class _GameScreenState extends State<GameScreen> {
                                                     const EdgeInsets.all(8.0),
                                                 child: Column(
                                                   mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .center,
+                                                      MainAxisAlignment.center,
                                                   children: [
                                                     Icon(
                                                       Gameicons.ok,
@@ -184,12 +191,10 @@ class _GameScreenState extends State<GameScreen> {
                                                       size: 28.sp,
                                                     ),
                                                     Text(
-                                                        gameCubit
-                                                            .gameConraller
+                                                        gameCubit.gameConraller
                                                             .helpAddCurrectCard
                                                             .toString(),
-                                                        style: Theme.of(
-                                                                context)
+                                                        style: Theme.of(context)
                                                             .primaryTextTheme
                                                             .bodyText1)
                                                   ],
@@ -212,15 +217,14 @@ class _GameScreenState extends State<GameScreen> {
                                                 decoration: BoxDecoration(
                                                     color: bcbegGamebtn,
                                                     border: Border.all(
-                                                        color: Colors
-                                                            .blueAccent),
+                                                        color:
+                                                            Colors.blueAccent),
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             10)),
                                                 child: Padding(
                                                   padding:
-                                                      const EdgeInsets.all(
-                                                          8.0),
+                                                      const EdgeInsets.all(8.0),
                                                   child: Column(
                                                     mainAxisAlignment:
                                                         MainAxisAlignment
@@ -232,8 +236,7 @@ class _GameScreenState extends State<GameScreen> {
                                                         size: 28,
                                                       ),
                                                       Text(
-                                                          gameCubit
-                                                              .helpAddTryis
+                                                          gameCubit.helpAddTryis
                                                               .toString(),
                                                           style: Theme.of(
                                                                   context)
@@ -275,8 +278,7 @@ class _GameScreenState extends State<GameScreen> {
                                             ? Colors.green[700]
                                             : Colors.transparent,
                                         child: AnimatedContainer(
-                                          duration:
-                                              Duration(milliseconds: 200),
+                                          duration: Duration(milliseconds: 200),
                                           color: wrong
                                               ? Colors.red[700]
                                               : Colors.transparent,
@@ -328,16 +330,16 @@ class _GameScreenState extends State<GameScreen> {
                                 ),
                               ),
                               Container(
-                                height: MediaQuery.of(context).size.height -
-                                    200.h,
+                                height:
+                                    MediaQuery.of(context).size.height - 200.h,
                                 child: Stack(
                                   children: [
-                                    Center(child: GameGridView(gameCubit: gameCubit)),
+                                    Center(
+                                        child:
+                                            GameGridView(gameCubit: gameCubit)),
                                     Positioned(
-
                                         right: 0,
                                         child: AnimatedOpacity(
-
                                             duration:
                                                 Duration(milliseconds: 200),
                                             opacity: currect ? 1 : 0,
@@ -375,8 +377,7 @@ class _GameScreenState extends State<GameScreen> {
                                 ),
                               ),
                             ],
-                          )
-                          );
+                          ));
                         } else {
                           return Container();
                         }

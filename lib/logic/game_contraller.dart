@@ -1,5 +1,5 @@
 
-class GameConraller{
+class GameController{
 
 
 
@@ -13,7 +13,7 @@ class GameConraller{
   int helpAddTryis= 20;
   int helpAddCurrectCard= 10;
 
-  GameConraller(
+  GameController(
       { required  this.gamelevle,
     required   this.cardnum,
     required   this.imagelevel,

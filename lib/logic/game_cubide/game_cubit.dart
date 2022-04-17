@@ -17,7 +17,7 @@ part 'game_state.dart';
 
 class GameCubit extends Cubit<GameStatus> {
   GameCubit() : super(GameStatus());
-  late GameConraller gameConraller;
+  late GameController gameConraller;
   StagesModule stagesManager = StagesModule();
 
   late SharedPreferences sharedPreferences;
@@ -31,11 +31,12 @@ class GameCubit extends Cubit<GameStatus> {
   List<CardModule> cards = [];
   List<String> imagschosing = [];
   int _imagelevel = 0;
+  int _imageArray = 0 ;
   int colomesno = 2;
   int _counter = 0;
   CardModule? card1, card2; // tra
   ONClickCard onClickCard = ONClickCard();
-  int _defultlevel = 44;
+  int _defultlevel = 43;
   int _defulthelpersAdd = 20;
   int _defulthelpersCurrect = 10;
 
@@ -46,12 +47,12 @@ class GameCubit extends Cubit<GameStatus> {
 
     _cardnum = _getDatafromjson(stagesManager.cardnum);
     _imagelevel = _getDatafromjson(stagesManager.imagelevel);
-
+_imageArray = _getDatafromjson(stagesManager.imageArray);
     _lastitemno = _getDatafromjson(stagesManager.lastitemno);
 
     colomesno = _getDatafromjson(stagesManager.colomesno);
 
-    gameConraller = GameConraller(
+    gameConraller = GameController(
         gamelevle: gamelevle,
         cardnum: _cardnum,
         imagelevel: _imagelevel,
@@ -62,22 +63,24 @@ class GameCubit extends Cubit<GameStatus> {
         helpAddTryis: helpAddTryis ?? 20,
         helpAddCurrectCard: helpAddCurrectCard ?? 20);
 
-    imagesvalues = _getimagLevel(0);
+    imagesvalues = _getimagLevel(_imageArray);
     _randomchosing();
     emit(GameLoading());
   }
+void _gamelaoding (){
 
+}
   void gameRestart() async {
     await _loadSavedData();
 
     _cardnum = _getDatafromjson(stagesManager.cardnum);
     _imagelevel = _getDatafromjson(stagesManager.imagelevel);
-
+_imageArray = _getDatafromjson(stagesManager.imageArray);
     _lastitemno = _getDatafromjson(stagesManager.lastitemno);
 
     colomesno = _getDatafromjson(stagesManager.colomesno);
 
-    gameConraller = GameConraller(
+    gameConraller = GameController(
         gamelevle: gamelevle,
         cardnum: _cardnum,
         imagelevel: _imagelevel,
@@ -88,7 +91,7 @@ class GameCubit extends Cubit<GameStatus> {
         helpAddTryis: helpAddTryis  ,
         helpAddCurrectCard: helpAddCurrectCard  );
     // imagesvalues.clear() ;
-    imagesvalues = _getimagLevel(0);
+    imagesvalues = _getimagLevel(_imageArray);
     _randomchosing();
 
     emit(GameLoading());
@@ -180,18 +183,13 @@ class GameCubit extends Cubit<GameStatus> {
   }
 
   int _settryies() {
-    if (gamelevle < 50) {
-      return _cardnum * 3;
-    }
-    if (gamelevle > 50 && gamelevle < 70) {
-      return _cardnum * 3 - 5;
-    }
 
-    return _cardnum * 3;
+      return _cardnum * 3- _imageArray *3 ;
+
   }
 
   List<String> _getimagLevel(int i) {
-    imaglevels = [imagesvalues_FirstStages];
+    imaglevels = [imagesvaluesFirstStages , imagesvaluesFlages];
     return imaglevels[i];
   }
 
