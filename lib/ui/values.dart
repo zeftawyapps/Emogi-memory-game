@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 
+String imageLogo = "assets/img/logo.png";
+String imageCoins = "assets/img/coins.png";
 
 // Colors
 var backgroungrideGame =

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -32,12 +33,14 @@ class _GameScreenState extends State<GameScreen> {
     // TODO: implement initState
     super.initState();
     gameCubit = GameCubit();
+
     gameCubit.gameInit();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       body: Container(
         child: BlocBuilder<GameCubit, GameStatus>(
           bloc: GameCubit(),
@@ -53,13 +56,23 @@ class _GameScreenState extends State<GameScreen> {
                       listenWhen: (p, c) => p != c,
                       listener: (c, s) {
                         if (s is Winner) {
-                          showDialog(context: context, builder:(_){
-
-                            return GameResultDailog();
-                          });
-
+                          showWin().then((value) => {gameCubit.gameRestart()});
                         }
-                        if (s is Losser) {}
+                        if (s is Losser) {
+                          {
+                            showDialog(
+                                context: context,
+                                builder: (_) {
+                                  return GameResultDailog(
+                                    iswin: false,
+                                    tryis: 0,
+                                    cardNom: gameCubit.gameConraller.cardnum,
+                                    gamelevle:
+                                        gameCubit.gameConraller.gamelevle,
+                                  );
+                                }).then((value) => {gameCubit.gameRestart()});
+                          }
+                        }
                         if (s is ResultCurrect) {
                           setState(() {
                             currect = true;
@@ -310,7 +323,7 @@ class _GameScreenState extends State<GameScreen> {
                                         child: Column(
                                           children: [
                                             Text(
-                                              'scores',
+                                              'points',
                                               style: TextStyle(
                                                   fontSize: 15.sp,
                                                   color: Colors.white),
@@ -344,7 +357,7 @@ class _GameScreenState extends State<GameScreen> {
                                                 Duration(milliseconds: 200),
                                             opacity: currect ? 1 : 0,
                                             child: Text(
-                                              "1+",
+                                              "2+",
                                               style: TextStyle(
                                                   fontSize: 40.sp,
                                                   color: Colors.green),
@@ -391,5 +404,18 @@ class _GameScreenState extends State<GameScreen> {
     );
   }
 
+  Future showWin() async {
+    return await showDialog(
+        context: context,
+        builder: (_) {
+          return GameResultDailog(
+            cardNom: gameCubit.gameConraller.cardnum,
+
+            iswin: true,
+            tryis: gameCubit.gameConraller.trayes,
+            gamelevle: gameCubit.gameConraller.gamelevle,
+          );
+        });
+  }
   //
 }

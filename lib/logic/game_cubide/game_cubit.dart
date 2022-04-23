@@ -13,6 +13,8 @@ import 'package:memory_game/logic/values.dart';
 import 'package:meta/meta.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../procject_metiods.dart';
+
 part 'game_state.dart';
 
 class GameCubit extends Cubit<GameStatus> {
@@ -21,6 +23,7 @@ class GameCubit extends Cubit<GameStatus> {
   StagesModule stagesManager = StagesModule();
 
   late SharedPreferences sharedPreferences;
+  bool isNoAction = true ;
   int helpAddTryis = 20;
   int helpAddCurrectCard = 20;
   int _cardnum = 2;
@@ -36,18 +39,19 @@ class GameCubit extends Cubit<GameStatus> {
   int _counter = 0;
   CardModule? card1, card2; // tra
   ONClickCard onClickCard = ONClickCard();
-  int _defultlevel = 5;
+  int _defultlevel = 1;
   int _defulthelpersAdd = 20;
   int _defulthelpersCurrect = 10;
-
+PlaySound play = PlaySound();
   void gameInit() async {
+
     await stagesManager.laodnig();
 
     await _loadSavedData();
 
     _cardnum = _getDatafromjson(stagesManager.cardnum);
     _imagelevel = _getDatafromjson(stagesManager.imagelevel);
-_imageArray = _getDatafromjson(stagesManager.imageArray);
+    _imageArray = _getDatafromjson(stagesManager.imageArray);
     _lastitemno = _getDatafromjson(stagesManager.lastitemno);
 
     colomesno = _getDatafromjson(stagesManager.colomesno);
@@ -60,11 +64,13 @@ _imageArray = _getDatafromjson(stagesManager.imageArray);
         colomesno: colomesno,
         scors: 0,
         trayes: _settryies(),
-        helpAddTryis: helpAddTryis ?? 20,
-        helpAddCurrectCard: helpAddCurrectCard ?? 20);
+        helpAddTryis: helpAddTryis ,
+        helpAddCurrectCard: helpAddCurrectCard );
 
     imagesvalues = _getimagLevel(_imageArray);
     _randomchosing();
+    play.playStart();
+    isNoAction  = false ;
     emit(GameLoading());
   }
 void _gamelaoding (){
@@ -75,7 +81,7 @@ void _gamelaoding (){
 
     _cardnum = _getDatafromjson(stagesManager.cardnum);
     _imagelevel = _getDatafromjson(stagesManager.imagelevel);
-_imageArray = _getDatafromjson(stagesManager.imageArray);
+    _imageArray = _getDatafromjson(stagesManager.imageArray);
     _lastitemno = _getDatafromjson(stagesManager.lastitemno);
 
     colomesno = _getDatafromjson(stagesManager.colomesno);
@@ -93,41 +99,46 @@ _imageArray = _getDatafromjson(stagesManager.imageArray);
     // imagesvalues.clear() ;
     imagesvalues = _getimagLevel(_imageArray);
     _randomchosing();
-
+    isNoAction  = false ;
     emit(GameLoading());
     Timer(Duration(milliseconds: 100), () {
       _counter = 0;
-
+play.playStart();
       emit(GameStart());
     });
   }
 
-  void clik(CardModule card, int i) {
-    gameConraller.trayes--;
-
+  void clik(CardModule card, int i) async {
+    // gameConraller.trayes--;
+ isNoAction  = true ;
     emit(CardRotat());
     cards[i].isclicked = true;
     cards[i].result = IS_CHOSSED;
     _counter++;
-    Timer(Duration(milliseconds: 500), () {
+    await  play.playClick();
+    Timer(Duration(milliseconds: 500), () async {
       if (_counter == 2) {
         card2 = cards[i];
         emit(WaitToResult());
 
-        Timer(Duration(milliseconds: 500), () {
+        Timer(Duration(milliseconds: 500), () async {
           if (_matching(card1!.imagesv, card2!.imagesv)) {
             _currect();
             _counter = 0;
-            gameConraller.scors++;
+             gameConraller.scors = gameConraller.scors + 2 ;
+            await play.playCurrect() ;
             emit(ResultCurrect());
           } else {
+          await   play.playWrong();
             _warng();
             _counter = 0;
+          gameConraller.trayes = gameConraller.trayes - 2 ;
             emit(ResultWrong());
           }
         });
       } else {
         card1 = cards[i];
+isNoAction = false  ;
         emit(ClickedCard1());
       }
     });
@@ -140,15 +151,18 @@ _imageArray = _getDatafromjson(stagesManager.imageArray);
     if (helpAddTryis == 0) {
       return;
     }
+    play.playhelpAdd();
     emit(HelpAdd());
   }
 
   void resultDone(CardModule c) {
     if (cards[c.cardno].result == MATCHED) {
+      isNoAction  = false ;
       emit(ResultDone());
       return;
     }
     cards[c.cardno].result = NO_CHANCH;
+    isNoAction = false ;
     emit(ResultDone());
   }
 
@@ -184,7 +198,7 @@ _imageArray = _getDatafromjson(stagesManager.imageArray);
 
   int _settryies() {
 
-      return _cardnum * 3- _imageArray *3 ;
+      return _cardnum * 2- _imageArray *2 ;
 
   }
 
@@ -293,13 +307,14 @@ _imageArray = _getDatafromjson(stagesManager.imageArray);
       cards[cardscurrect[1].cardno].result = IS_CHOSSED;
       card1 = cards[cardscurrect[0].cardno];
       card2 = cards[cardscurrect[1].cardno];
+      play.playhelpcurrec();
       emit(HelpCorroct());
         Timer(Duration(milliseconds: 500), () {
 
         _currect();
         _counter = 0;
 
-        gameConraller.scors++;
+        gameConraller.scors = gameConraller.scors + 2 ;
         emit(ResultCurrect());
       });
     }
@@ -307,10 +322,13 @@ _imageArray = _getDatafromjson(stagesManager.imageArray);
 
 
 void switchGameOver(){
- if (   gameConraller.isGameWin())
-   emit(Winner());
- if (   gameConraller.isGameLoss())
-   emit(Losser());
+    bool isw = gameConraller.isGameWin();
+ if (  isw    ){
+
+   emit(Winner());}
+ if (   gameConraller.isGameLoss()){
+
+   emit(Losser());}
 
 }
 

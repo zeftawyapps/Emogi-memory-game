@@ -52,3 +52,7 @@ class  Winner extends GameStart implements   GameStatus  {
 class  Losser extends GameStart implements   GameStatus  {
 
 }
+
+class  StopAction extends GameStart implements   GameStatus  {
+
+}

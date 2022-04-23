@@ -1,4 +1,5 @@
 
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 
 import '../values.dart';
@@ -17,7 +18,7 @@ class BacgGame  extends StatelessWidget {
           gradient: backgroungrideGame
       )
       ,
-      child: child,
+      child: FadeIn(child: child!),
     );
   }
 }

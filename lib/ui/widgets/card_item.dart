@@ -25,8 +25,7 @@ class CardItem extends StatefulWidget {
 
 class _CardItemState extends State<CardItem> {
   bool annimate = false;
-  bool isNoAction = false;
-  bool desapper = false;
+   bool desapper = false;
   bool loadgame = false;
   @override
   Widget build(BuildContext context) {
@@ -35,18 +34,21 @@ class _CardItemState extends State<CardItem> {
       listener: (c, s) {
         if (s is GameLoading) {
           loadgame = true;
-        }
+
+         }
         if (s is GameStart) {
           loadgame = false;
+          // isNoAction = false ;
+
         }
         if (s is CardRotat || s is WaitToResult) {
-          isNoAction = true;
+          // isNoAction = true;
         }
         if (s is HelpCorroct) {
           if (!widget.cardModule.isclicked) {
             if (widget.cardModule.result == IS_CHOSSED) {
               annimate = true;
-              isNoAction = true;
+              // isNoAction = true;
               Timer(Duration(milliseconds: 400), () {
                 setState(() {
                   annimate = false;
@@ -57,18 +59,27 @@ class _CardItemState extends State<CardItem> {
             }
           }
         }
-        if (s is ResultDone || s is ClickedCard1) {
+        if (s is  ClickedCard1){
+          Timer(Duration(milliseconds: 700), (){
+            // isNoAction = false;
+          });
+        }
+        if (s is ResultDone ) {
           if (widget.cardModule.result == MATCHED) {
-            isNoAction = true;
+            // isNoAction = true;
           } else {
-            isNoAction = false;
+            Timer(Duration(milliseconds: 700), (){
+              // isNoAction = false;
+            });
+
           }
         }
         if (s is ResultWrong) {
+          // isNoAction = true  ;
           if (widget.cardModule.result == WRONG_CHOOSe) {
             annimate = true;
 
-            Timer(Duration(milliseconds: 300), () {
+            Timer(Duration(milliseconds: 400), () {
               setState(() {
                 annimate = false;
                 widget.gameCubit.resultDone(widget.cardModule);
@@ -78,6 +89,8 @@ class _CardItemState extends State<CardItem> {
         }
 
         if (s is ResultCurrect) {
+          // isNoAction = true  ;
+
           Timer(Duration(milliseconds: 300), () {
             setState(() {
               annimate = false;
@@ -93,7 +106,7 @@ class _CardItemState extends State<CardItem> {
         child: GestureDetector(
             onTap: () {
               int i;
-              if (isNoAction || widget.cardModule.result == MATCHED ) {
+              if ( widget.gameCubit.isNoAction ||  widget.cardModule.result == MATCHED ) {
                 return;
               }
               if (!widget.cardModule.isclicked) {

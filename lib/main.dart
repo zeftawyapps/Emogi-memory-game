@@ -7,6 +7,7 @@ import 'logic/gameprovider.dart';
 import 'logic/projprovider.dart';
 
 void main() {
+
   runApp(MyApp());
 }
 
@@ -26,6 +27,8 @@ class MyApp extends StatelessWidget {
         builder: () {
           return MaterialApp(
             debugShowCheckedModeBanner: false ,
+              theme: new ThemeData(scaffoldBackgroundColor: Colors.black ),
+
             home : SpachScreen());
         }
       ),);
