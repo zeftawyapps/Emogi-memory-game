@@ -4,8 +4,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:memory_game/logic/gameprovider.dart';
-import 'package:memory_game/logic/procject_metiods.dart';
+ import 'package:memory_game/logic/procject_metiods.dart';
 import 'package:memory_game/logic/values.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -53,14 +52,17 @@ PlaySound play = PlaySound();
 
              if (myscors > scor*50) {
                int c = scor*50  - widget.cardNom*50 ;
+               setState(() {
                if (c > 0 ){
                  if (c>=10){
-                   setState(() {
-                     coins =  c/ 2;
-                   });
 
-                 }else {coins = 2 ; }
-               }
+                     coins =  c +widget.cardNom*5 ;
+
+
+                 }else {coins =  widget.cardNom*5 ;}
+               }else {
+                 coins = (widget.cardNom/2)*5 ; }
+               });
                coinvesable = true;
                play.playwinMomy();
                t.cancel();

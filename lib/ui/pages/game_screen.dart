@@ -56,7 +56,8 @@ class _GameScreenState extends State<GameScreen> {
                       listenWhen: (p, c) => p != c,
                       listener: (c, s) {
                         if (s is Winner) {
-                          showWin().then((value) => {gameCubit.gameRestart()});
+                          showWin().then((value) => {
+                            gameCubit.gameNextLevel()});
                         }
                         if (s is Losser) {
                           {

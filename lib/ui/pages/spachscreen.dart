@@ -5,8 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:memory_game/ui/pages/game_screen.dart';
 import 'package:provider/provider.dart';
 
-import '../../logic/gameprovider.dart';
-import '../values.dart';
+ import '../values.dart';
 
 class SpachScreen extends StatefulWidget {
   SpachScreen({Key? key}) : super(key: key);
@@ -16,7 +15,7 @@ class SpachScreen extends StatefulWidget {
 }
 
 class _SpachScreenState extends State<SpachScreen> {
-  GameProvider gameProvider = GameProvider();
+  // GameProvider gameProvider = GameProvider();
 
   bool isDesapear = false;
 
@@ -24,10 +23,10 @@ class _SpachScreenState extends State<SpachScreen> {
 
   @override
   Widget build(BuildContext context) {
-    gameProvider = context.watch<GameProvider>();
+    // gameProvider = context.watch<GameProvider>();
 
     Timer.periodic(Duration(seconds: 2), (timer) {
-      gameProvider.loading();
+      // gameProvider.loading();
       if (isDesapear) {
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (c) => GameScreen()));

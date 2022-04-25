@@ -9,6 +9,7 @@ import 'package:memory_game/logic/game_cubide/on_click_card.dart';
 import 'package:memory_game/logic/imgvalues.dart';
 import 'package:memory_game/logic/mylibs/modulscreateor.dart';
 import 'package:memory_game/logic/mylibs/stagesmodule.dart';
+import 'package:memory_game/logic/stageConfigratoin.dart';
 import 'package:memory_game/logic/values.dart';
 import 'package:meta/meta.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -18,6 +19,8 @@ import '../procject_metiods.dart';
 part 'game_state.dart';
 
 class GameCubit extends Cubit<GameStatus> {
+
+  List<String>imagesvalues=[];
   GameCubit() : super(GameStatus());
   late GameController gameConraller;
   StagesModule stagesManager = StagesModule();
@@ -26,16 +29,17 @@ class GameCubit extends Cubit<GameStatus> {
   bool isNoAction = true ;
   int helpAddTryis = 20;
   int helpAddCurrectCard = 20;
-  int _cardnum = 2;
+  // int _cardnum = 2;
   int gamelevle = 31;
-  int _lastno = 0;
-  int _lastitemno = 10;
+  // int _lastno = 0;
+  // int _lastitemno = 10;
   List<String> valuesCards = [];
   List<CardModule> cards = [];
   List<String> imagschosing = [];
-  int _imagelevel = 0;
-  int _imageArray = 0 ;
-  int colomesno = 2;
+  // int _imagelevelRandm = 0;
+  // int _imageArray = 0 ;
+  int defcultLevel = 0 ;
+  // int colomesno = 2;
   int _counter = 0;
   CardModule? card1, card2; // tra
   ONClickCard onClickCard = ONClickCard();
@@ -43,31 +47,33 @@ class GameCubit extends Cubit<GameStatus> {
   int _defulthelpersAdd = 20;
   int _defulthelpersCurrect = 10;
 PlaySound play = PlaySound();
+ late  StageConfigs stageConfigs  ;
+
   void gameInit() async {
 
     await stagesManager.laodnig();
 
     await _loadSavedData();
-
-    _cardnum = _getDatafromjson(stagesManager.cardnum);
-    _imagelevel = _getDatafromjson(stagesManager.imagelevel);
-    _imageArray = _getDatafromjson(stagesManager.imageArray);
-    _lastitemno = _getDatafromjson(stagesManager.lastitemno);
-
-    colomesno = _getDatafromjson(stagesManager.colomesno);
+      stageConfigs = StageConfigs(gamelevle);
+    // _cardnum = _getDatafromjson(stagesManager.cardnum);
+    // _imagelevelRandm = _getDatafromjson(stagesManager.imagelevel);
+    // _imageArray = _getDatafromjson(stagesManager.imageArray);
+    // _lastitemno = _getDatafromjson(stagesManager.lastitemno);
+    // colomesno = _getDatafromjson(stagesManager.colomesno);
 
     gameConraller = GameController(
+      defcualt: stageConfigs.defcult,
         gamelevle: gamelevle,
-        cardnum: _cardnum,
-        imagelevel: _imagelevel,
-        lastitemno: _lastitemno,
-        colomesno: colomesno,
+        cardnum: stageConfigs.cardnum,
+        imagelevelRandom: stageConfigs.imagelevelRandom,
+        lastitemno: stageConfigs.lastno,
+        colomesno: stageConfigs.colomesno,
         scors: 0,
-        trayes: _settryies(),
+        trayes: _settryies(stageConfigs.cardnum),
         helpAddTryis: helpAddTryis ,
         helpAddCurrectCard: helpAddCurrectCard );
 
-    imagesvalues = _getimagLevel(_imageArray);
+    imagesvalues = stageConfigs.imagValue;
     _randomchosing();
     play.playStart();
     isNoAction  = false ;
@@ -79,31 +85,69 @@ void _gamelaoding (){
   void gameRestart() async {
     await _loadSavedData();
 
-    _cardnum = _getDatafromjson(stagesManager.cardnum);
-    _imagelevel = _getDatafromjson(stagesManager.imagelevel);
-    _imageArray = _getDatafromjson(stagesManager.imageArray);
-    _lastitemno = _getDatafromjson(stagesManager.lastitemno);
 
-    colomesno = _getDatafromjson(stagesManager.colomesno);
+    // _cardnum = _getDatafromjson(stagesManager.cardnum);
+    // _imagelevelRandm = _getDatafromjson(stagesManager.imagelevel);
+    // _imageArray = _getDatafromjson(stagesManager.imageArray);
+    // _lastitemno = _getDatafromjson(stagesManager.lastitemno);
+
+    // colomesno = _getDatafromjson(stagesManager.colomesno);
 
     gameConraller = GameController(
+        defcualt: stageConfigs.defcult,
         gamelevle: gamelevle,
-        cardnum: _cardnum,
-        imagelevel: _imagelevel,
-        lastitemno: _lastitemno,
-        colomesno: colomesno,
+        cardnum: stageConfigs.cardnum,
+        imagelevelRandom: stageConfigs.imagelevelRandom,
+        lastitemno: stageConfigs.lastno,
+        colomesno: stageConfigs.colomesno,
         scors: 0,
-        trayes: _settryies(),
-        helpAddTryis: helpAddTryis  ,
-        helpAddCurrectCard: helpAddCurrectCard  );
+        trayes: _settryies(stageConfigs.cardnum),
+        helpAddTryis: helpAddTryis ,
+        helpAddCurrectCard: helpAddCurrectCard );
+
     // imagesvalues.clear() ;
-    imagesvalues = _getimagLevel(_imageArray);
+    imagesvalues = stageConfigs.imagValue;
     _randomchosing();
     isNoAction  = false ;
     emit(GameLoading());
     Timer(Duration(milliseconds: 100), () {
       _counter = 0;
 play.playStart();
+      emit(GameStart());
+    });
+  }
+  void gameNextLevel() async {
+    await _loadSavedData();
+    stageConfigs = StageConfigs(gamelevle);
+
+
+    // _cardnum = _getDatafromjson(stagesManager.cardnum);
+    // _imagelevelRandm = _getDatafromjson(stagesManager.imagelevel);
+    // _imageArray = _getDatafromjson(stagesManager.imageArray);
+    // _lastitemno = _getDatafromjson(stagesManager.lastitemno);
+
+    // colomesno = _getDatafromjson(stagesManager.colomesno);
+
+    gameConraller = GameController(
+        defcualt: stageConfigs.defcult,
+        gamelevle: gamelevle,
+        cardnum: stageConfigs.cardnum,
+        imagelevelRandom: stageConfigs.imagelevelRandom,
+        lastitemno: stageConfigs.lastno,
+        colomesno: stageConfigs.colomesno,
+        scors: 0,
+        trayes: _settryies(stageConfigs.cardnum),
+        helpAddTryis: helpAddTryis ,
+        helpAddCurrectCard: helpAddCurrectCard );
+
+    // imagesvalues.clear() ;
+    imagesvalues = stageConfigs.imagValue;
+    _randomchosing();
+    isNoAction  = false ;
+    emit(GameLoading());
+    Timer(Duration(milliseconds: 100), () {
+      _counter = 0;
+      play.playStart();
       emit(GameStart());
     });
   }
@@ -196,27 +240,23 @@ isNoAction = false  ;
         sharedPreferences.getInt(sharedhelpcurrect) ?? _defulthelpersCurrect;
   }
 
-  int _settryies() {
+  int _settryies(int cardno ) {
 
-      return _cardnum * 2- _imageArray *2 ;
+      return  cardno * 2- defcultLevel *2 ;
 
   }
 
-  List<String> _getimagLevel(int i) {
-    imaglevels = [imagesvaluesFirstStages , imagesvaluesFlages];
-    return imaglevels[i];
-  }
 
   void _randomchosing() {
-    _lastno = _lastitemno;
+    int _lastno = gameConraller.lastitemno ;
     Random randomimage = new Random();
     Random randomplace = new Random();
     print(imagesvalues.length.toString());
     cards.clear();
     imagschosing.clear();
 
-    double imgerequscount = _cardnum / 2;
-    int randomNumber = randomimage.nextInt(_imagelevel);
+    double imgerequscount = gameConraller.cardnum / 2;
+    int randomNumber = randomimage.nextInt(5);
     for (int i = 0; i < imgerequscount; i++) {
       _lastno = _lastno + randomNumber + 1;
       if (_lastno > imagesvalues.length - 1) {
@@ -229,7 +269,7 @@ isNoAction = false  ;
     List<String> cardprocess = <String>[];
     int i2 = 0;
     int ivalue = 0;
-    for (int i = 0; i < _cardnum; i++) {
+    for (int i = 0; i < gameConraller.cardnum; i++) {
       cardprocess.add(imagschosing[ivalue]);
       cardprocess2.add({i: imagschosing[ivalue]});
       if (i % 2 != 0) {
@@ -254,12 +294,13 @@ isNoAction = false  ;
       cards[i].result = STARTED;
       print('${cards[i].imagesv}  noms  ${cards[i].cardno}');
     }
+    print ("card ${gameConraller.cardnum} colums ${gameConraller.colomesno}");
   }
 
   double aspectretio() {
-    switch (colomesno) {
+    switch (gameConraller.colomesno) {
       case 2:
-        if (_cardnum == 6) {
+        if (gameConraller.cardnum == 6) {
           return 1.3;
         } else {
           return 1.6;
@@ -267,7 +308,7 @@ isNoAction = false  ;
       case 3:
         return 1.2;
       case 4:
-        switch (_cardnum) {
+        switch (gameConraller.cardnum) {
           case 20:
             return 1.0;
           case 24:
@@ -280,7 +321,7 @@ isNoAction = false  ;
   }
 
   double fontsize() {
-    switch (colomesno) {
+    switch (gameConraller.colomesno) {
       case 2:
         return 45.sp;
       case 3:

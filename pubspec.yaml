@@ -75,7 +75,7 @@ flutter:
   fonts:
      - family: Gameicons
        fonts:
-         - asset: assite/icons/Gameicons.ttf
+         - asset: assets/icons/Gameicons.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

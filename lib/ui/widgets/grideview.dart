@@ -12,16 +12,25 @@ class GameGridView extends StatefulWidget {
 }
 
 class _GameGridViewState extends State<GameGridView> {
+  double size =0 ;
+  double aspcit = 0 ;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+  }
   @override
   Widget build(BuildContext context) {
-    double size = widget.gameCubit.fontsize();
+    size = widget.gameCubit.fontsize();
+    aspcit =    widget.gameCubit.aspectretio();
 
     return Container(
       child: GridView.builder(
         physics: NeverScrollableScrollPhysics(),
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: widget.gameCubit.gameConraller.colomesno,
-              childAspectRatio: widget.gameCubit.aspectretio()),
+              childAspectRatio:aspcit ),
           itemCount: widget.gameCubit.cards.length,
           shrinkWrap: true,
           // physics: NeverScrollableScrollPhysics(),
