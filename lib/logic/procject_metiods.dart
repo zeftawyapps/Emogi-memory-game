@@ -11,6 +11,7 @@ class PlaySound {
   String _wrang = "audio/wrong.mp3";
   String _win = "audio/wingame.mp3";
   String _winMony = "audio/getmony.mp3";
+  String _pay = "audio/casher.mp3";
 
   String _start = "audio/newGame.mp3";
   String _loss = "audio/gamiover.mp3";
@@ -56,5 +57,9 @@ class PlaySound {
 
   Future playStart() async {
     await currectAudio.play(_start);
+  }
+
+  Future playPayment() async {
+    await currectAudio.play(_pay);
   }
 }

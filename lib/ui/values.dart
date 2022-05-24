@@ -12,7 +12,7 @@ LinearGradient(
   end: Alignment.bottomLeft,
 
   colors: [
-  bcbeg , bcbeg2 , bcbeg3
+  bcbeg4 , bcbeg5 , bcbeg6
 
   ],);
 Color bcbeg = Color(0xFF7B0303);

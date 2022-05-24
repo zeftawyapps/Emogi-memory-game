@@ -90,7 +90,6 @@ void _gamelaoding (){
     // _imagelevelRandm = _getDatafromjson(stagesManager.imagelevel);
     // _imageArray = _getDatafromjson(stagesManager.imageArray);
     // _lastitemno = _getDatafromjson(stagesManager.lastitemno);
-
     // colomesno = _getDatafromjson(stagesManager.colomesno);
 
     gameConraller = GameController(
@@ -189,14 +188,22 @@ isNoAction = false  ;
   }
 
   void helpAdd() {
-    gameConraller.trayes = gameConraller.trayes + 10;
-    helpAddTryis = helpAddTryis - 1;
-    sharedPreferences.setInt(sharedhelpadd, helpAddTryis);
     if (helpAddTryis == 0) {
       return;
     }
+    gameConraller.trayes = gameConraller.trayes + 10;
+    helpAddTryis = helpAddTryis - 1;
+    sharedPreferences.setInt(sharedhelpadd, helpAddTryis);
+
     play.playhelpAdd();
     emit(HelpAdd());
+  }
+  void helpAddPaid(int value) {
+
+    helpAddTryis = helpAddTryis  + value ;
+    sharedPreferences.setInt(sharedhelpadd, helpAddTryis);
+
+    emit(HelpAddPayed());
   }
 
   void resultDone(CardModule c) {
@@ -230,6 +237,31 @@ isNoAction = false  ;
     card2!.isclicked = false;
     card1!.result = MATCHED;
     card2!.result = MATCHED;
+  }
+Future loadShardPrefrance ()async {
+  sharedPreferences = await SharedPreferences.getInstance();
+
+}
+void storeClosed(){
+  gameConraller = GameController(
+      defcualt: stageConfigs.defcult,
+      gamelevle: gamelevle,
+      cardnum: stageConfigs.cardnum,
+      imagelevelRandom: stageConfigs.imagelevelRandom,
+      lastitemno: stageConfigs.lastno,
+      colomesno: stageConfigs.colomesno,
+      scors: 0,
+      trayes: _settryies(stageConfigs.cardnum),
+      helpAddTryis: helpAddTryis ,
+      helpAddCurrectCard: helpAddCurrectCard );
+    emit(StoreClosed());
+}
+  Future loadSavedDataWithoutinit ()async {
+    gamelevle = sharedPreferences.getInt(sharedStages) ?? _defultlevel;
+    helpAddTryis = sharedPreferences.getInt(sharedhelpadd) ?? _defulthelpersAdd;
+    helpAddCurrectCard =
+        sharedPreferences.getInt(sharedhelpcurrect) ?? _defulthelpersCurrect;
+
   }
 
   Future _loadSavedData() async {
@@ -333,12 +365,13 @@ isNoAction = false  ;
   }
 
   void helpcurect( ) {
-    gameConraller.helpAddCurrectCard--;
-    sharedPreferences.setInt(
-        sharedhelpcurrect, gameConraller.helpAddCurrectCard);
     if (gameConraller.helpAddCurrectCard == 0) {
       return;
     }
+    gameConraller.helpAddCurrectCard--;
+    sharedPreferences.setInt(
+        sharedhelpcurrect, gameConraller.helpAddCurrectCard);
+
     if (_counter == 1) {
       String s = card1!.imagesv;
       var cardscurrect =
@@ -361,6 +394,13 @@ isNoAction = false  ;
     }
   }
 
+  void helpcurectPay( int v ) {
+
+    helpAddCurrectCard = helpAddCurrectCard +v  ;
+    sharedPreferences.setInt(
+        sharedhelpcurrect, helpAddCurrectCard);
+    emit(HelpCorroctPued());
+  }
 
 void switchGameOver(){
     bool isw = gameConraller.isGameWin();

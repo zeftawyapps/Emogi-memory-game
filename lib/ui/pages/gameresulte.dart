@@ -4,20 +4,23 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
- import 'package:memory_game/logic/procject_metiods.dart';
+import 'package:memory_game/logic/game_provider.dart';
+import 'package:memory_game/logic/procject_metiods.dart';
 import 'package:memory_game/logic/values.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../values.dart';
 
 class GameResultDailog extends StatefulWidget {
-  bool iswin = false ;
-  int tryis = 0 ;
-  int gamelevle = 0 ;
-  int cardNom = 0 ;
-  GameResultDailog({required  this.iswin, this.tryis=0, required  this.gamelevle
-  ,required this.cardNom
-  });
+  bool iswin = false;
+  int tryis = 0;
+  int gamelevle = 0;
+  int cardNom = 0;
+  GameResultDailog(
+      {required this.iswin,
+      this.tryis = 0,
+      required this.gamelevle,
+      required this.cardNom});
 
   @override
   _GameResultDailogState createState() => _GameResultDailogState();
@@ -25,62 +28,65 @@ class GameResultDailog extends StatefulWidget {
 
 class _GameResultDailogState extends State<GameResultDailog> {
   int myscors = 0;
-  bool coinvesable = false ;
-PlaySound play = PlaySound();
-  double  coins = 0 ;
-
-@override
+  bool coinvesable = false;
+  PlaySound play = PlaySound();
+  double coins = 0;
+int? money  ;
+  late GameProvider gameProvider;
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    if (widget.iswin){
-    play.playwin() ;
-  }else {
+    if (widget.iswin) {
+      play.playwin();
+    } else {
       play.playloss();
-    }}
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    // GameProvider gameProvider = context.watch<GameProvider>();
-    int scor = widget .tryis ;
-    if (widget.iswin ) {
-
-     Timer(Duration(milliseconds: 500) , (){
-       if (myscors < scor * 50){
-         Timer timer = Timer.periodic(Duration(milliseconds: 150), (t) {
-           setState(() {
-             myscors = myscors + 10;
-
-             if (myscors > scor*50) {
-               int c = scor*50  - widget.cardNom*50 ;
-               setState(() {
-               if (c > 0 ){
-                 if (c>=10){
-
-                     coins =  c +widget.cardNom*5 ;
-
-
-                 }else {coins =  widget.cardNom*5 ;}
-               }else {
-                 coins = (widget.cardNom/2)*5 ; }
-               });
-               coinvesable = true;
-               play.playwinMomy();
-               t.cancel();
-             }
-           });
-         });
-       }
-
-     });  }else {
+    gameProvider = context.watch<GameProvider>();
+    if (money == null ) {
+      gameProvider.laodMoneyValue();
      }
+    money =    gameProvider.money ;
+    int scor = widget.tryis;
+    if (widget.iswin) {
+      Timer(Duration(milliseconds: 500), () {
+        if (myscors < scor * 50) {
+          Timer timer = Timer.periodic(Duration(milliseconds: 150), (t) {
+            setState(() {
+              myscors = myscors + 10;
+
+              if (myscors > scor * 50) {
+                int c = scor * 50 - widget.cardNom * 50;
+                setState(() {
+                  if (c > 0) {
+                    if (c >= 10) {
+                      coins = c + widget.cardNom * 5;
+                    } else {
+                      coins = widget.cardNom * 5;
+                    }
+                  } else {
+                    coins = (widget.cardNom / 2) * 5;
+                  }
+                });
+                t.cancel();
+                coinvesable = true;
+                play.playwinMomy();
+              }
+            });
+          });
+        }
+      });
+    } else {}
     return ZoomIn(
       child: WillPopScope(
         onWillPop: () async {
-          SystemNavigator.pop();
           return false;
         },
         child: Dialog(
-
             shape: RoundedRectangleBorder(),
             backgroundColor: Colors.transparent,
             child: Stack(
@@ -92,65 +98,64 @@ PlaySound play = PlaySound();
                       color: bcbeg3,
                       border: Border.all(color: Colors.blueAccent),
                       borderRadius: BorderRadius.circular(10)),
-
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                     Row(
-                       mainAxisAlignment: MainAxisAlignment.spaceAround,
-                       children: [
-                       Text('level',
-                           style: TextStyle(fontSize: 30.sp , color: Colors.white)
-
-                       ),
-SizedBox(width:  20.w ,) ,
-                       Text('${widget.gamelevle}', style: Theme.of(context).primaryTextTheme.headline3),
-                     ],),
-
-                      Visibility(
-                          visible: widget .iswin,
-                          child:
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                             children: [
-                              Text('scores',
-                            style: TextStyle(fontSize: 30.sp , color: Colors.white)
-
-                          , ) ,
-                              SizedBox(width:  20.w ,) ,
-
-                              Text('$myscors',
-                                  style: TextStyle(fontSize: 24.sp , color: Colors.white)
-                              )
-
-                             ],)
-
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Text('level',
+                              style: TextStyle(
+                                  fontSize: 30.sp, color: Colors.white)),
+                          SizedBox(
+                            width: 20.w,
                           ),
+                          Text('${widget.gamelevle}',
+                              style:
+                                  Theme.of(context).primaryTextTheme.headline3),
+                        ],
+                      ),
+                      Visibility(
+                          visible: widget.iswin,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Text(
+                                'scores',
+                                style: TextStyle(
+                                    fontSize: 30.sp, color: Colors.white),
+                              ),
+                              SizedBox(
+                                width: 20.w,
+                              ),
+                              Text('$myscors',
+                                  style: TextStyle(
+                                      fontSize: 24.sp, color: Colors.white))
+                            ],
+                          )),
                       Visibility(
                           visible: coinvesable,
-                          child:
-                          Row(
+                          child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               Container(
-                                 width: 50,height: 50,
-                                child:  Image.asset(imageCoins) ,)
-                              ,
-                               SizedBox(width:  30.w ,) ,
-
+                                width: 50,
+                                height: 50,
+                                child: Image.asset(imageCoins),
+                              ),
+                              SizedBox(
+                                width: 30.w,
+                              ),
                               Text('${coins.toInt()}',
-                                  style: TextStyle(fontSize: 24.sp , color: Colors.white)
-
-                              )
-
-                            ],)
-
-                      ),
+                                  style: TextStyle(
+                                      fontSize: 24.sp, color: Colors.white))
+                            ],
+                          )),
                       SizedBox(
                         height: 50.h,
                       ),
                       Container(
-                        color:  Color(0x8E470E01),
+                        color: Color(0x8E470E01),
                         height: 40.h,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -158,13 +163,9 @@ SizedBox(width:  20.w ,) ,
                             Expanded(
                               child: MaterialButton(
                                   onPressed: () {
-                                    // gameProvider.restartgame();
-                                    //
-                                    // gameProvider.setwining();
+                                    gameProvider.addMoney(coins.toInt());
 
-                                    // Navigator.pushReplacement(context, MaterialPageRoute(builder: (c)=>Game_Sreen()  ) );
-
-                                Navigator.pop(context  );
+                                    Navigator.pop(context);
                                   },
                                   child: Icon(
                                     Icons.replay,
@@ -189,15 +190,18 @@ SizedBox(width:  20.w ,) ,
                                       int g = widget.gamelevle;
                                       SharedPreferences sharedPreferences =
                                           await SharedPreferences.getInstance();
-                                        // gameProvider.restartgame();
+                                      // gameProvider.restartgame();
                                       // gameProvider.game();
                                       sharedPreferences.setInt(
                                           sharedStages, g + 1);
+                                      // sharedPreferences.setInt(
+                                      //     sharedMoney, coins.toInt());
+
+                                      gameProvider.addMoney(coins.toInt());
 
                                       // Navigator.pushReplacement(context, MaterialPageRoute(builder: (c)=>GameSreen()  ) );
 
-                                      Navigator.pop(context  );
-
+                                      Navigator.pop(context);
                                     },
                                     child: Icon(
                                       Icons.play_arrow,
@@ -216,7 +220,7 @@ SizedBox(width:  20.w ,) ,
                   left: MediaQuery.of(context).size.width / 3 - 30,
                   child: Container(
                       color: Color(0xdd683503),
-                      child: Text(widget .iswin ? 'win' : 'loss',
+                      child: Text(widget.iswin ? 'win' : 'loss',
                           style: Theme.of(context).primaryTextTheme.headline2)),
                 )
               ],
@@ -224,5 +228,4 @@ SizedBox(width:  20.w ,) ,
       ),
     );
   }
-
 }

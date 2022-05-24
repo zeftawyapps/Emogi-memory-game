@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:memory_game/logic/game_cubide/game_cubit.dart';
 import 'package:memory_game/ui/pages/gameresulte.dart';
+import 'package:memory_game/ui/pages/store.dart';
 import 'package:memory_game/ui/widgets/grideview.dart';
 
 import '../values.dart';
@@ -55,6 +56,17 @@ class _GameScreenState extends State<GameScreen> {
                   body: BlocConsumer<GameCubit, GameStatus>(
                       listenWhen: (p, c) => p != c,
                       listener: (c, s) {
+
+                        if (s is StoreClosed){
+                          gameCubit.loadSavedDataWithoutinit();
+                        }
+                        if (s is HelpAddPayed){
+                          gameCubit.loadSavedDataWithoutinit();
+                        }
+                        if (s is HelpCorroctPued){
+                          gameCubit.loadSavedDataWithoutinit() ;
+
+                        }
                         if (s is Winner) {
                           showWin().then((value) => {
                             gameCubit.gameNextLevel()});
@@ -62,6 +74,7 @@ class _GameScreenState extends State<GameScreen> {
                         if (s is Losser) {
                           {
                             showDialog(
+                                barrierDismissible:false ,
                                 context: context,
                                 builder: (_) {
                                   return GameResultDailog(
@@ -131,12 +144,7 @@ class _GameScreenState extends State<GameScreen> {
                                   children: [
                                     MaterialButton(
                                         onPressed: () {
-                                          // showDialog(
-                                          //     barrierDismissible: false ,
-                                          //     context: context, builder: (context){
-                                          //
-                                          //   return GameResult();
-                                          // });
+
                                         },
                                         child: Icon(
                                           Icons.settings,
@@ -146,32 +154,27 @@ class _GameScreenState extends State<GameScreen> {
                                     MaterialButton(
                                         onPressed: () {
                                           gameCubit.gameRestart();
-                                          // gamep.restartgame();
-                                          // setState(() {
-                                          //   gamep.game() ;
-                                          //   restart = true ;
-                                          //   // Navigator.pushReplacement(context, MaterialPageRoute(builder: (c)=>Game_Sreen()  ) );
-                                          //
-                                          // });
+
                                         },
                                         child: Icon(
                                           Icons.replay,
                                           color: Colors.white,
-                                          size: 24,
+                                          size: 24.sp,
                                         )),
                                     MaterialButton(
                                         onPressed: () {
-                                          gameCubit.gameInit();
+                                          showStore();
                                         },
                                         child: Icon(
                                           Icons.local_grocery_store,
                                           color: Colors.white,
-                                          size: 24,
+                                          size: 24.sp,
                                         ))
                                   ],
                                 ),
                               ),
                               Container(
+
                                 height: 80.h,
                                 child: Row(
                                   children: [
@@ -205,7 +208,7 @@ class _GameScreenState extends State<GameScreen> {
                                                       size: 28.sp,
                                                     ),
                                                     Text(
-                                                        gameCubit.gameConraller
+                                                        gameCubit
                                                             .helpAddCurrectCard
                                                             .toString(),
                                                         style: Theme.of(context)
@@ -407,6 +410,7 @@ class _GameScreenState extends State<GameScreen> {
 
   Future showWin() async {
     return await showDialog(
+        barrierDismissible:false ,
         context: context,
         builder: (_) {
           return GameResultDailog(
@@ -418,5 +422,15 @@ class _GameScreenState extends State<GameScreen> {
           );
         });
   }
-  //
+
+  Future showStore() async {
+    return await showDialog(
+        barrierDismissible:false ,
+        context: context,
+        builder: (_) {
+          return GameStoresDialog();
+        }).then((value) => gameCubit.storeClosed());
+  }
+
+//
 }

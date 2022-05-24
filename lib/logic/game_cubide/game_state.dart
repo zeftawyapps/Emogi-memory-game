@@ -20,8 +20,18 @@ class NewGame  extends GameStart  implements GameStatus {
 class HelpCorroct extends GameStart implements GameStatus {
 
 }
+class HelpCorroctPued extends GameStart implements GameStatus {
+
+}
 
 class HelpAdd extends GameStart   implements GameStatus {
+
+}
+class HelpAddPayed extends GameStart   implements GameStatus {
+
+}
+
+class StoreClosed extends GameStart   implements GameStatus {
 
 }
 class  CardRotat extends GameStart implements   GameStatus {
