@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 String imageLogo = "assets/img/logo.png";
 String imageCoins = "assets/img/coins.png";
 
+String imageAds  = "assets/img/ads.png";
+
 // Colors
 var backgroungrideGame =
 LinearGradient(

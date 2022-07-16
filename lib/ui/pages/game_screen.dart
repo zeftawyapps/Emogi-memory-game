@@ -35,7 +35,7 @@ class _GameScreenState extends State<GameScreen> {
     super.initState();
     gameCubit = GameCubit();
 
-    gameCubit.gameInit();
+    gameCubit.gameInit(context);
   }
 
   @override

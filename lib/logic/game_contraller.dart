@@ -10,8 +10,8 @@ class GameController{
   int colomesno =3;
   int scors = 0;
   int trayes = 48;
-  int helpAddTryis= 20;
-  int helpAddCurrectCard= 10;
+  // int helpAddTryis= 20;
+  // int helpAddCurrectCard= 10;
 int defcualt = 0 ;
   GameController(
       { required  this.gamelevle,
@@ -21,8 +21,7 @@ int defcualt = 0 ;
     required   this.colomesno,
     required   this.scors,
    required    this.trayes,
-   required    this.helpAddTryis,
-   required    this.helpAddCurrectCard,
+
         required this.defcualt
      });
 

@@ -8,8 +8,10 @@ import 'package:memory_game/ui/widgets/alarm_containt/pay_from_store.dart';
 import 'package:memory_game/ui/widgets/pay_alarm_dailog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../logic/procject_metiods.dart';
 import '../../logic/values.dart';
 import '../values.dart';
+import 'alarm_containt/unsuffesiont_fund.dart';
 import 'gameicons_icons.dart';
 
 class HelpToolsItem extends StatelessWidget {
@@ -90,7 +92,11 @@ class HelpToolsItem extends StatelessWidget {
 
                 if (isEnabled) {
                   showMassagePay(context ) ;
-                } else {}
+                } else {
+                  
+                  showMassageNotFound(context);
+                  
+                }
               },
               child: Container(
                 height: 50,
@@ -120,7 +126,7 @@ class HelpToolsItem extends StatelessWidget {
 
   void payTheProduct() {
     if (type == sharedhelpadd) {
-      gameCubit.helpAddPaid(count);
+      gameCubit.helpAddPay(count);
     } else {
       // v = v + count ;
       gameCubit.helpcurectPay(count);
@@ -133,9 +139,19 @@ gameProvider.declineMoney(price);
         context: context,
         builder: (c) {
           return AlarmDialog(containt: ContentPayFromStoreDialog(count: count , type: type  ,
-          ) , title:   "pay",) ;
+          ) , title:   "pay", playsound:  PlaySound().playwrang) ;
         }).then((value){
           payTheProduct() ;
     });
   }
+
+  void showMassageNotFound(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (c) {
+         return AlarmDialog(containt :ContentUnsuffes(state:1 ,gameCubit:  gameCubit,) , title: "not found",playsound: PlaySound().playwrang,) ;
+    });
+  }
+
+
 }

@@ -6,12 +6,12 @@ void runAudio(String uri) async {
 }
 
 class PlaySound {
-  String _currect = "audio/currect.mp3";
-  String _click = "audio/click.mp3";
-  String _wrang = "audio/wrong.mp3";
+  String playcurrect = "audio/currect.mp3";
+  String playclick = "audio/click.mp3";
+  String playwrang = "audio/wrong.mp3";
   String _win = "audio/wingame.mp3";
   String _winMony = "audio/getmony.mp3";
-  String _pay = "audio/casher.mp3";
+  String playpay = "audio/casher.mp3";
 
   String _start = "audio/newGame.mp3";
   String _loss = "audio/gamiover.mp3";
@@ -22,17 +22,20 @@ class PlaySound {
   final wrongAudio = AudioCache();
   final currectAudio = AudioCache();
   final winAudio = AudioCache();
+Future play(String playUrl)async{
+  await clickAudio.play(playUrl);
 
+}
   Future playClick() async {
-    await clickAudio.play(_click);
+    await clickAudio.play(playclick);
   }
 
   Future playWrong() async {
-    await clickAudio.play(_wrang);
+    await clickAudio.play(playwrang);
   }
 
   Future playCurrect() async {
-    await currectAudio.play(_currect);
+    await currectAudio.play(playcurrect);
   }
 
   Future playwin() async {
@@ -60,6 +63,6 @@ class PlaySound {
   }
 
   Future playPayment() async {
-    await currectAudio.play(_pay);
+    await currectAudio.play(playpay);
   }
 }
