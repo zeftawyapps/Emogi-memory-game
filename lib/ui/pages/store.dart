@@ -13,7 +13,8 @@ import '../../logic/values.dart';
 import '../values.dart';
 
 class GameStoresDialog extends StatefulWidget {
-  const GameStoresDialog({Key? key}) : super(key: key);
+  Color background ;
+  GameStoresDialog({Key? key , required this.background }) : super(key: key);
 
   @override
   State<GameStoresDialog> createState() => _GameStoresDialogState();
@@ -23,6 +24,7 @@ class _GameStoresDialogState extends State<GameStoresDialog> {
   late StoreCubit storeCubit;
   int? money;
  late  GameProvider gameProvider ;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -39,10 +41,10 @@ class _GameStoresDialogState extends State<GameStoresDialog> {
     return ZoomIn(
       child: Dialog(
         child: Container(
-            width: 500.w,
-            height: 1000.h,
+            width: 500 ,
+            height: 1000 ,
             decoration: BoxDecoration(
-                color: bcbeg3,
+                color: widget.background ,
                 border: Border.all(color: Colors.blueAccent),
                 borderRadius: BorderRadius.circular(10)),
             child: Padding(
@@ -51,18 +53,18 @@ class _GameStoresDialogState extends State<GameStoresDialog> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(
-                      color: Color(0xdd683503),
+                      color: widget.background,
                       child: Text('Store',
                           style: Theme.of(context).primaryTextTheme.headline2)),
                   SizedBox(
-                    height: 20.h,
+                    height: 20 ,
                   ),
                   MonyCounter(
                     money: money ?? 0,
                   ),
                   Expanded(flex: 15, child: HelpToolsStore(money: money ?? 0)),
                   SizedBox(
-                    height: 10.h,
+                    height: 10 ,
                   ),
                   Expanded(
                       flex: 2,
@@ -79,7 +81,7 @@ class _GameStoresDialogState extends State<GameStoresDialog> {
                                 child: Text(
                               "Close",
                               style: TextStyle(
-                                  fontSize: 24.sp, color: Colors.white),
+                                  fontSize: 24, color: Colors.white),
                             )),
                           ),
                         ),

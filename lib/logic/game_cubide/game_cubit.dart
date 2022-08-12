@@ -28,7 +28,7 @@ class GameCubit extends Cubit<GameStatus> {
   InterstitialAd? _interstitialAd;
   RewardedAd? rewardedAd ;
   GameCubit() : super(GameStatus());
-  late GameController gameConraller;
+   GameController gameConraller = GameController.init();
   StagesModule stagesManager = StagesModule();
 late  BuildContext  context ;
   late SharedPreferences sharedPreferences;
@@ -49,14 +49,16 @@ late  BuildContext  context ;
   int _counter = 0;
   CardModule? card1, card2; // tra
   ONClickCard onClickCard = ONClickCard();
-  int _defultlevel = 60;
+  int _defultlevel = 1;
   int _defulthelpersAdd = 20;
   int _defulthelpersCurrect = 10;
   PlaySound play = PlaySound();
   late StageConfigs stageConfigs;
+
+
   Future loadInitAds() async {
     await InterstitialAd.load(
-        adUnitId: '$initAdsTest',
+        adUnitId: '$initAds',
         request: AdRequest(),
         adLoadCallback: InterstitialAdLoadCallback(
           onAdLoaded: (InterstitialAd ad) {
@@ -72,7 +74,7 @@ late  BuildContext  context ;
 Future    loadRewardedAds() async {
 
     await      RewardedAd.load(
-        adUnitId: '$rewardedAdsTest',
+        adUnitId: '$rewardedAds',
         request: AdRequest(),
         rewardedAdLoadCallback: RewardedAdLoadCallback(
           onAdLoaded: (RewardedAd ad) {
@@ -121,17 +123,11 @@ void initRewardedAdsLesteners(int state ){
     }
 }
   void gameInit(BuildContext context ) async {
-    await loadInitAds();
-    await loadRewardedAds();
+
     await stagesManager.laodnig();
  this.  context = context ;
     await _loadSavedData();
     stageConfigs = StageConfigs(gamelevle);
-    // _cardnum = _getDatafromjson(stagesManager.cardnum);
-    // _imagelevelRandm = _getDatafromjson(stagesManager.imagelevel);
-    // _imageArray = _getDatafromjson(stagesManager.imageArray);
-    // _lastitemno = _getDatafromjson(stagesManager.lastitemno);
-    // colomesno = _getDatafromjson(stagesManager.colomesno);
 
     gameConraller = GameController(
         defcualt: stageConfigs.defcult,
@@ -148,18 +144,21 @@ void initRewardedAdsLesteners(int state ){
     _randomchosing();
     play.playStart();
     isNoAction = false;
+     await loadInitAds();
+    await loadRewardedAds();
     emit(GameLoading());
+    emit(GameStart());
   }
 
-  void showInitAds() {
+  Future showInitAds() async  {
     if (_interstitialAd != null) {
-      _interstitialAd!.show();
-    }else {loadInitAds(); }
+      emit(GameLoading());
+      return  _interstitialAd!.show();
+    }else {  loadInitAds(); }
   }
 
   void gameRestart() async {
     await _loadSavedData();
-    showInitAds();
     await loadInitAds();
     await loadRewardedAds();
     gameConraller = GameController(
@@ -182,7 +181,10 @@ void initRewardedAdsLesteners(int state ){
       _counter = 0;
       play.playStart();
       emit(GameStart());
+      emit(AttemetNotLow());
     });
+    await  showInitAds();
+
   }
 
   void gameNextLevel() async {
@@ -253,7 +255,7 @@ void initRewardedAdsLesteners(int state ){
   void helpcurect() {
     if ( helpAddCurrectCard <= 0) {
       helpAddCurrectCard = 0 ;
-     showDialog(context: context , builder:(c)=>AlarmDialog(containt:ContentUnsuffes(state:3 ,gameCubit: this,), title: "not found",playsound: PlaySound().playwrang,) ) ;
+     showDialog(context: context , builder:(c)=>AlarmDialog(containt:ContentUnsuffes(state:3 ,gameCubit: this,), title: "not found",playsound: PlaySound().playwrang, backgruod: stageConfigs.dailogcolor!,) ) ;
 
    return ;
     }else {
@@ -291,7 +293,7 @@ void initRewardedAdsLesteners(int state ){
   void helpAdd() {
     if (  helpAddTryis <= 0) {
       helpAddTryis = 0 ;
-      showDialog(context: context , builder:(c)=>AlarmDialog(containt:ContentUnsuffes(state:2 ,gameCubit:  this,), title: "not found" ,  playsound:  PlaySound().playwrang,  )  ) ;
+      showDialog(context: context , builder:(c)=>AlarmDialog(containt:ContentUnsuffes(state:2 ,gameCubit:  this,),backgruod: stageConfigs.dailogcolor! ,  title: "not found" ,  playsound:  PlaySound().playwrang,  )  ) ;
 return ;
     }else {
     gameConraller.trayes = gameConraller.trayes + 10;
@@ -327,7 +329,17 @@ return ;
   bool _matching(String c, String c1) {
     return c == c1;
   }
+void checkIfAttempetIsLow(){
+ if ( gameConraller.trayes <=4){
+   play.playhelpAdd();
 
+   emit (AttemetLow());
+
+ } else {
+   emit (AttemetNotLow());
+
+ }
+}
   void _warng() {
     card1!.isclicked = false;
     card2!.isclicked = false;
@@ -371,8 +383,9 @@ return ;
     sharedPreferences = await SharedPreferences.getInstance();
     gamelevle = sharedPreferences.getInt(sharedStages) ?? _defultlevel;
     helpAddTryis = sharedPreferences.getInt(sharedhelpadd) ?? _defulthelpersAdd;
-    helpAddCurrectCard =
-        sharedPreferences.getInt(sharedhelpcurrect) ?? _defulthelpersCurrect;
+    helpAddCurrectCard = sharedPreferences.getInt(sharedhelpcurrect) ?? _defulthelpersCurrect;
+
+
   }
 
   int _settryies(int cardno) {
@@ -444,7 +457,7 @@ return ;
           case 20:
             return 1.0;
           case 24:
-            return 1.2;
+            return 1.1;
           case 28:
             return 1.75;
         }
@@ -455,11 +468,11 @@ return ;
   double fontsize() {
     switch (gameConraller.colomesno) {
       case 2:
-        return 45.sp;
+        return 42.sp;
       case 3:
-        return 40.sp;
+        return 30.sp;
       case 4:
-        return 25.sp;
+        return 20.sp;
     }
     return 10;
   }

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:memory_game/logic/game_cubide/game_cubit.dart';
 import 'package:memory_game/logic/imgvalues.dart';
+import 'package:memory_game/ui/values.dart';
 import 'package:memory_game/ui/widgets/animations.dart';
 
 class CardItem extends StatefulWidget {
@@ -25,7 +26,7 @@ class CardItem extends StatefulWidget {
 
 class _CardItemState extends State<CardItem> {
   bool annimate = false;
-   bool desapper = false;
+  bool desapper = false;
   bool loadgame = false;
   @override
   Widget build(BuildContext context) {
@@ -34,8 +35,7 @@ class _CardItemState extends State<CardItem> {
       listener: (c, s) {
         if (s is GameLoading) {
           loadgame = true;
-
-         }
+        }
         if (s is GameStart) {
           loadgame = false;
           // isNoAction = false ;
@@ -59,19 +59,18 @@ class _CardItemState extends State<CardItem> {
             }
           }
         }
-        if (s is  ClickedCard1){
-          Timer(Duration(milliseconds: 700), (){
+        if (s is ClickedCard1) {
+          Timer(Duration(milliseconds: 700), () {
             // isNoAction = false;
           });
         }
-        if (s is ResultDone ) {
+        if (s is ResultDone) {
           if (widget.cardModule.result == MATCHED) {
             // isNoAction = true;
           } else {
-            Timer(Duration(milliseconds: 700), (){
+            Timer(Duration(milliseconds: 700), () {
               // isNoAction = false;
             });
-
           }
         }
         if (s is ResultWrong) {
@@ -106,7 +105,8 @@ class _CardItemState extends State<CardItem> {
         child: GestureDetector(
             onTap: () {
               int i;
-              if ( widget.gameCubit.isNoAction ||  widget.cardModule.result == MATCHED ) {
+              if (widget.gameCubit.isNoAction ||
+                  widget.cardModule.result == MATCHED) {
                 return;
               }
               if (!widget.cardModule.isclicked) {
@@ -129,10 +129,18 @@ class _CardItemState extends State<CardItem> {
               toMainFace: loadgame,
               animate: annimate,
               child2: Container(
+                margin: EdgeInsets.all(8.0),
                 decoration: BoxDecoration(
-                    color: Color(0xffa68309),
-                    border: Border.all(color: Colors.blueAccent),
-                    borderRadius: BorderRadius.circular(10)),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Color(0x54030303),
+                        offset: Offset(5.0, 5.0),
+                      )
+                    ],
+                    color: widget.gameCubit.stageConfigs.cardOfColor,
+
+                    // border: Border.all(color: Colors.blueAccent),
+                    borderRadius: BorderRadius.circular(20)),
                 child: Center(
                   child: Text(
                     '?',
@@ -143,10 +151,18 @@ class _CardItemState extends State<CardItem> {
                 ),
               ),
               child1: Container(
+                margin: EdgeInsets.all(8.0),
                 decoration: BoxDecoration(
-                    color: Color(0xffefe8d6),
-                    border: Border.all(color: Colors.blueAccent),
-                    borderRadius: BorderRadius.circular(10)),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Color(0x54030303),
+                        offset: Offset(5.0, 5.0),
+                      )
+                    ],
+                    color: widget.gameCubit.stageConfigs.cardOnColor,
+
+                    // border: Border.all(color: Colors.blueAccent),
+                    borderRadius: BorderRadius.circular(20)),
                 child: Center(
                   child: Text(
                     widget.cardModule.imagesv,

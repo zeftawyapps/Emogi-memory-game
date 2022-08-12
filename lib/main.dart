@@ -17,22 +17,28 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ScreenUtilInit(
+
+
+     return   ScreenUtilInit(
       minTextAdapt: true,
       designSize: const Size(375, 812),
-      builder: () {
-        return MultiProvider(
-          providers: [
-            ChangeNotifierProvider<GameProvider>(create: (c) => GameProvider()),
 
-          ],
-          child: MaterialApp(
-            debugShowCheckedModeBanner: false ,
-              theme: new ThemeData(scaffoldBackgroundColor: Colors.black ),
+       builder: (BuildContext context, Widget? child) {
+         return   MultiProvider(
+           providers: [
+             ChangeNotifierProvider<GameProvider>(create: (c) => GameProvider()),
 
-            home : SpachScreen()),
-        );
-      }
+           ],
+           child: MaterialApp(
+               debugShowCheckedModeBanner: false ,
+               theme: new ThemeData(scaffoldBackgroundColor: Colors.black ),
+
+               home : SpachScreen()),
+         );
+
+       },
+
+
     );
   }
 }

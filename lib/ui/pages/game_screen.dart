@@ -26,9 +26,14 @@ class _GameScreenState extends State<GameScreen> {
   bool currect = false;
   bool wrong = false;
   bool helpadd = false;
+  bool lowAttempet = false;
+  bool lowAttempetAlarm = false;
+
   bool helpCurrect = false;
   bool helpCurrectEnable = false;
-
+  String _showAttmete = "-2";
+  bool showAttemetsEnable = false;
+  late Timer timer;
   @override
   void initState() {
     // TODO: implement initState
@@ -56,28 +61,43 @@ class _GameScreenState extends State<GameScreen> {
                   body: BlocConsumer<GameCubit, GameStatus>(
                       listenWhen: (p, c) => p != c,
                       listener: (c, s) {
+                        if (s is AttemetLow) {
 
-                        if (s is StoreClosed){
+                         setState(() {
+                           lowAttempet = true ;
+                         });
+
+
+                        }
+                        if (s is AttemetNotLow) {
+                          setState(() {
+                            setState(() {
+                              lowAttempet = false  ;
+                            });
+                          });
+                        }
+                        if (s is StoreClosed) {
                           gameCubit.loadSavedDataWithoutinit();
                         }
-                        if (s is HelpAddPayed){
+                        if (s is HelpAddPayed) {
                           gameCubit.loadSavedDataWithoutinit();
                         }
-                        if (s is HelpCorroctPued){
-                          gameCubit.loadSavedDataWithoutinit() ;
-
+                        if (s is HelpCorroctPued) {
+                          gameCubit.loadSavedDataWithoutinit();
                         }
                         if (s is Winner) {
-                          showWin().then((value) => {
-                            gameCubit.gameNextLevel()});
+                          showWin()
+                              .then((value) => {gameCubit.gameNextLevel()});
                         }
                         if (s is Losser) {
                           {
                             showDialog(
-                                barrierDismissible:false ,
+                                barrierDismissible: false,
                                 context: context,
                                 builder: (_) {
                                   return GameResultDailog(
+                                    backGround:
+                                        gameCubit.stageConfigs.dailogcolor!,
                                     iswin: false,
                                     tryis: 0,
                                     cardNom: gameCubit.gameConraller.cardnum,
@@ -99,6 +119,7 @@ class _GameScreenState extends State<GameScreen> {
                           gameCubit.switchGameOver();
                         }
                         if (s is ResultWrong) {
+                          gameCubit.checkIfAttempetIsLow();
                           setState(() {
                             wrong = true;
                           });
@@ -107,11 +128,13 @@ class _GameScreenState extends State<GameScreen> {
                               wrong = false;
                             });
                           });
+
                           gameCubit.switchGameOver();
                         }
                         if (s is HelpAdd) {
                           setState(() {
                             helpadd = true;
+                            lowAttempet = false ;
                           });
                           Timer(Duration(milliseconds: 500), () {
                             setState(() {
@@ -132,110 +155,74 @@ class _GameScreenState extends State<GameScreen> {
                       bloc: gameCubit,
                       buildWhen: (p, c) => p != c,
                       builder: (context, s) {
+
                         // s is CardClick ||s is CardRotat || s is WaitToResult || s is Result || s is ResultDone
                         if (s is GameLoading || s is GameStart) {
-                          return BacgGame(Column(
-                            children: [
-                              Container(
-                                height: 40.h,
-                                color: Color(0x79110F0F),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    MaterialButton(
-                                        onPressed: () {
-
-                                        },
-                                        child: Icon(
-                                          Icons.settings,
-                                          color: Colors.white,
-                                          size: 24.sp,
-                                        )),
-                                    MaterialButton(
-                                        onPressed: () {
-                                          gameCubit.gameRestart();
-
-                                        },
-                                        child: Icon(
-                                          Icons.replay,
-                                          color: Colors.white,
-                                          size: 24.sp,
-                                        )),
-                                    MaterialButton(
-                                        onPressed: () {
-                                          showStore();
-                                        },
-                                        child: Icon(
-                                          Icons.local_grocery_store,
-                                          color: Colors.white,
-                                          size: 24.sp,
-                                        ))
-                                  ],
+                          return BacgGame(
+                            child: Column(
+                              children: [
+                                Container(
+                                  height: 40.h,
+                                  color: Color(0x79110F0F),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      MaterialButton(
+                                          onPressed: () {},
+                                          child: Icon(
+                                            Icons.settings,
+                                            color: Colors.white,
+                                            size: 24.sp,
+                                          )),
+                                      MaterialButton(
+                                          onPressed: () {
+                                             gameCubit.gameRestart();
+                                          },
+                                          child: Icon(
+                                            Icons.replay,
+                                            color: Colors.white,
+                                            size: 24.sp,
+                                          )),
+                                      MaterialButton(
+                                          onPressed: () {
+                                            showStore();
+                                          },
+                                          child: Icon(
+                                            Icons.local_grocery_store,
+                                            color: Colors.white,
+                                            size: 24.sp,
+                                          ))
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              Container(
-
-                                height: 80.h,
-                                child: Row(
-                                  children: [
-                                    AnimatedOpacity(
-                                      duration: Duration(milliseconds: 200),
-                                      opacity: helpCurrectEnable ? 1 : 0,
-                                      child: Stack(
-                                        children: [
-                                          GestureDetector(
-                                            onTap: () {
-                                              gameCubit.helpcurect();
-                                            },
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                  color: bcbegGamebtn,
-                                                  border: Border.all(
-                                                      color: Colors.blueAccent),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10)),
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(8.0),
-                                                child: Column(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: [
-                                                    Icon(
-                                                      Gameicons.ok,
-                                                      color: Colors.white,
-                                                      size: 28.sp,
-                                                    ),
-                                                    Text(
-                                                        gameCubit
-                                                            .helpAddCurrectCard
-                                                            .toString(),
-                                                        style: Theme.of(context)
-                                                            .primaryTextTheme
-                                                            .bodyText1)
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Expanded(
-                                        flex: 1,
+                                Container(
+                                  color: Color(0x1D110F0F),
+                                  height: 80.h,
+                                  child: Row(
+                                    children: [
+                                      AnimatedOpacity(
+                                        duration: Duration(milliseconds: 200),
+                                        opacity: helpCurrectEnable ? 1 : 0,
                                         child: Stack(
                                           children: [
                                             GestureDetector(
                                               onTap: () {
-                                                gameCubit.helpAdd();
+                                                gameCubit.helpcurect();
                                               },
-                                              child: Container(
+                                              child: AnimatedContainer(
+                                                duration:
+                                                    Duration(milliseconds: 500),
                                                 decoration: BoxDecoration(
-                                                    color: bcbegGamebtn,
+                                                    color: gameCubit
+                                                        .stageConfigs
+                                                        .helpcardsColor,
                                                     border: Border.all(
-                                                        color:
-                                                            Colors.blueAccent),
+                                                        color: lowAttempet
+                                                            ? Colors.red
+                                                            : Colors.blueAccent,
+                                                        width: lowAttempet
+                                                            ? 2
+                                                            : 0),
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             10)),
@@ -248,12 +235,13 @@ class _GameScreenState extends State<GameScreen> {
                                                             .center,
                                                     children: [
                                                       Icon(
-                                                        Icons.add,
+                                                        Gameicons.ok,
                                                         color: Colors.white,
-                                                        size: 28,
+                                                        size: 28.sp,
                                                       ),
                                                       Text(
-                                                          gameCubit.helpAddTryis
+                                                          gameCubit
+                                                              .helpAddCurrectCard
                                                               .toString(),
                                                           style: Theme.of(
                                                                   context)
@@ -265,49 +253,86 @@ class _GameScreenState extends State<GameScreen> {
                                               ),
                                             ),
                                           ],
-                                        )),
-                                    Expanded(
-                                      flex: 1,
-                                      child: Container(
-                                        child: Column(
-                                          children: [
-                                            Text(
-                                              'level ',
-                                              style: TextStyle(
-                                                  fontSize: 15.sp,
-                                                  color: Colors.white),
-                                            ),
-                                            Text(
-                                              gameCubit.gamelevle.toString(),
-                                              style: TextStyle(
-                                                  fontSize: 15.sp,
-                                                  color: Colors.white),
-                                            )
-                                          ],
                                         ),
                                       ),
-                                    ),
-                                    Expanded(
-                                      flex: 1,
-                                      child: AnimatedContainer(
-                                        duration: Duration(milliseconds: 200),
-                                        color: helpadd
-                                            ? Colors.green[700]
-                                            : Colors.transparent,
-                                        child: AnimatedContainer(
-                                          duration: Duration(milliseconds: 200),
-                                          color: wrong
-                                              ? Colors.red[700]
-                                              : Colors.transparent,
+                                      Expanded(
+                                          flex: 1,
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(horizontal: 5),
+                                            child: GestureDetector(
+                                              onTap: () {
+                                                gameCubit.helpAdd();
+                                              },
+                                              child: Stack(
+                                                children: [
+                                                  Center(
+                                                    child: AnimatedContainer(
+                                                      duration:Duration(milliseconds: 500) ,
+                                                      decoration: BoxDecoration(
+                                                          color: gameCubit
+                                                              .stageConfigs
+                                                              .helpcardsColor,
+                                                          border: Border.all(
+                                                              color: lowAttempet
+                                                                  ? Colors.red
+                                                                  : Colors.blueAccent,
+                                                              width: lowAttempet
+                                                                  ? 2
+                                                                  : 0),
+                                                          borderRadius:
+                                                          BorderRadius.circular(
+                                                              10)),
+                                                      child: Padding(
+                                                        padding:
+                                                        const EdgeInsets.all(
+                                                            8.0),
+                                                        child: Column(
+                                                          mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                          children: [
+                                                            Icon(
+                                                              Icons.add,
+                                                              color: Colors.white,
+                                                              size: 28,
+                                                            ),
+                                                            Text(
+                                                                gameCubit
+                                                                    .helpAddTryis
+                                                                    .toString(),
+                                                                style: Theme.of(
+                                                                    context)
+                                                                    .primaryTextTheme
+                                                                    .bodyText1)
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  AnimatedContainer(
+
+                                                    duration:Duration(milliseconds: 500) ,
+                                                    color: lowAttempet  ?  Color(
+                                                        0x4BF8000C) :Colors.transparent,
+                                                  ),
+
+                                                ],
+                                              ),
+                                            ),
+                                          )),
+                                      Expanded(
+                                        flex: 1,
+                                        child: Container(
                                           child: Column(
                                             children: [
-                                              Text('attempts',
-                                                  style: TextStyle(
-                                                      fontSize: 15.sp,
-                                                      color: Colors.white)),
                                               Text(
-                                                gameCubit.gameConraller.trayes
-                                                    .toString(),
+                                                'level ',
+                                                style: TextStyle(
+                                                    fontSize: 15.sp,
+                                                    color: Colors.white),
+                                              ),
+                                              Text(
+                                                gameCubit.gamelevle.toString(),
                                                 style: TextStyle(
                                                     fontSize: 15.sp,
                                                     color: Colors.white),
@@ -316,85 +341,117 @@ class _GameScreenState extends State<GameScreen> {
                                           ),
                                         ),
                                       ),
-                                    ),
-                                    Expanded(
-                                      flex: 1,
-                                      child: AnimatedContainer(
-                                        duration: Duration(milliseconds: 200),
-                                        color: currect
-                                            ? Colors.green
-                                            : Colors.transparent,
-                                        child: Column(
-                                          children: [
-                                            Text(
-                                              'points',
-                                              style: TextStyle(
-                                                  fontSize: 15.sp,
-                                                  color: Colors.white),
+                                      Expanded(
+                                        flex: 1,
+                                        child: AnimatedContainer(
+                                          duration: Duration(milliseconds: 200),
+                                          color: helpadd
+                                              ? Colors.green[700]
+                                              : Colors.transparent,
+                                          child: AnimatedContainer(
+                                            duration:
+                                                Duration(milliseconds: 200),
+                                            color: wrong
+                                                ? Colors.red[700]
+                                                : Colors.transparent,
+                                            child: Column(
+                                              children: [
+                                                Text('attempts',
+                                                    style: TextStyle(
+                                                        fontSize: 15.sp,
+                                                        color: Colors.white)),
+                                                Text(
+                                                  gameCubit.gameConraller.trayes
+                                                      .toString(),
+                                                  style: TextStyle(
+                                                      fontSize: 15.sp,
+                                                      color: Colors.white),
+                                                )
+                                              ],
                                             ),
-                                            Text(
-                                              gameCubit.gameConraller.scors
-                                                  .toString(),
-                                              style: TextStyle(
-                                                  fontSize: 15.sp,
-                                                  color: Colors.white),
-                                            )
-                                          ],
+                                          ),
                                         ),
                                       ),
-                                    )
-                                  ],
+                                      Expanded(
+                                        flex: 1,
+                                        child: AnimatedContainer(
+                                          duration: Duration(milliseconds: 200),
+                                          color: currect
+                                              ? Colors.green
+                                              : Colors.transparent,
+                                          child: Column(
+                                            children: [
+                                              Text(
+                                                'points',
+                                                style: TextStyle(
+                                                    fontSize: 15.sp,
+                                                    color: Colors.white),
+                                              ),
+                                              Text(
+                                                gameCubit.gameConraller.scors
+                                                    .toString(),
+                                                style: TextStyle(
+                                                    fontSize: 15.sp,
+                                                    color: Colors.white),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              Container(
-                                height:
-                                    MediaQuery.of(context).size.height - 200.h,
-                                child: Stack(
-                                  children: [
-                                    Center(
-                                        child:
-                                            GameGridView(gameCubit: gameCubit)),
-                                    Positioned(
-                                        right: 0,
-                                        child: AnimatedOpacity(
-                                            duration:
-                                                Duration(milliseconds: 200),
-                                            opacity: currect ? 1 : 0,
-                                            child: Text(
-                                              "2+",
-                                              style: TextStyle(
-                                                  fontSize: 40.sp,
-                                                  color: Colors.green),
-                                            ))),
-                                    Positioned(
-                                        right: 100,
-                                        child: AnimatedOpacity(
-                                            duration:
-                                                Duration(milliseconds: 200),
-                                            opacity: helpadd ? 1 : 0,
-                                            child: Text(
-                                              "10+",
-                                              style: TextStyle(
-                                                  fontSize: 40.sp,
-                                                  color: Colors.green),
-                                            ))),
-                                    Positioned(
-                                        right: 100.w,
-                                        child: AnimatedOpacity(
-                                            duration:
-                                                Duration(milliseconds: 200),
-                                            opacity: wrong ? 1 : 0,
-                                            child: Text(
-                                              "2-",
-                                              style: TextStyle(
-                                                  fontSize: 40.sp,
-                                                  color: Colors.red[700]),
-                                            ))),
-                                  ],
+                                Container(
+                                  height: MediaQuery.of(context).size.height -
+                                      200.h,
+                                  child: Stack(
+                                    children: [
+                                      Center(
+                                          child: GameGridView(
+                                              gameCubit: gameCubit)),
+                                      Positioned(
+                                          right: 0,
+                                          child: AnimatedOpacity(
+                                              duration:
+                                                  Duration(milliseconds: 200),
+                                              opacity: currect ? 1 : 0,
+                                              child: Text(
+                                                "2+",
+                                                style: TextStyle(
+                                                    fontSize: 40.sp,
+                                                    color: Colors.green),
+                                              ))),
+                                      Positioned(
+                                          right: 100,
+                                          child: AnimatedOpacity(
+                                              duration:
+                                                  Duration(milliseconds: 200),
+                                              opacity: helpadd ? 1 : 0,
+                                              child: Text(
+                                                "10+",
+                                                style: TextStyle(
+                                                    fontSize: 40.sp,
+                                                    color: Colors.green),
+                                              ))),
+                                      Positioned(
+                                          right: 100.w,
+                                          child: AnimatedOpacity(
+                                              duration:
+                                                  Duration(milliseconds: 200),
+                                              opacity: wrong ? 1 : 0,
+                                              child: Text(
+                                                "2-",
+                                                style: TextStyle(
+                                                    fontSize: 40.sp,
+                                                    color: Colors.red[700]),
+                                              ))),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            ],
-                          ));
+                              ],
+                            ),
+                            background: gameCubit.stageConfigs.background!,
+                          );
                         } else {
                           return Container();
                         }
@@ -410,12 +467,12 @@ class _GameScreenState extends State<GameScreen> {
 
   Future showWin() async {
     return await showDialog(
-        barrierDismissible:false ,
+        barrierDismissible: false,
         context: context,
         builder: (_) {
           return GameResultDailog(
+            backGround: gameCubit.stageConfigs.dailogcolor!,
             cardNom: gameCubit.gameConraller.cardnum,
-
             iswin: true,
             tryis: gameCubit.gameConraller.trayes,
             gamelevle: gameCubit.gameConraller.gamelevle,
@@ -425,10 +482,12 @@ class _GameScreenState extends State<GameScreen> {
 
   Future showStore() async {
     return await showDialog(
-        barrierDismissible:false ,
+        barrierDismissible: false,
         context: context,
         builder: (_) {
-          return GameStoresDialog();
+          return GameStoresDialog(
+            background: gameCubit.stageConfigs.dailogcolor!,
+          );
         }).then((value) => gameCubit.storeClosed());
   }
 

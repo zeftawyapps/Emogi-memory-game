@@ -7,6 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:memory_game/logic/game_provider.dart';
 import 'package:memory_game/logic/procject_metiods.dart';
 import 'package:memory_game/logic/values.dart';
+import 'package:memory_game/ui/pages/store.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../values.dart';
@@ -16,8 +17,10 @@ class GameResultDailog extends StatefulWidget {
   int tryis = 0;
   int gamelevle = 0;
   int cardNom = 0;
+  Color backGround;
   GameResultDailog(
       {required this.iswin,
+        required this.backGround  ,
       this.tryis = 0,
       required this.gamelevle,
       required this.cardNom});
@@ -31,8 +34,9 @@ class _GameResultDailogState extends State<GameResultDailog> {
   bool coinvesable = false;
   PlaySound play = PlaySound();
   double coins = 0;
-int? money  ;
+  int? money;
   late GameProvider gameProvider;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -47,10 +51,10 @@ int? money  ;
   @override
   Widget build(BuildContext context) {
     gameProvider = context.watch<GameProvider>();
-    if (money == null ) {
+    if (money == null) {
       gameProvider.laodMoneyValue();
-     }
-    money =    gameProvider.money ;
+    }
+    money = gameProvider.money;
     int scor = widget.tryis;
     if (widget.iswin) {
       Timer(Duration(milliseconds: 500), () {
@@ -92,10 +96,10 @@ int? money  ;
             child: Stack(
               children: [
                 Container(
-                  width: 400.w,
+                  width: 400,
                   height: MediaQuery.of(context).size.height / 2,
                   decoration: BoxDecoration(
-                      color: bcbeg3,
+                      color: widget .  backGround,
                       border: Border.all(color: Colors.blueAccent),
                       borderRadius: BorderRadius.circular(10)),
                   child: Column(
@@ -106,9 +110,9 @@ int? money  ;
                         children: [
                           Text('level',
                               style: TextStyle(
-                                  fontSize: 30.sp, color: Colors.white)),
+                                  fontSize: 30, color: Colors.white)),
                           SizedBox(
-                            width: 20.w,
+                            width: 20,
                           ),
                           Text('${widget.gamelevle}',
                               style:
@@ -123,14 +127,14 @@ int? money  ;
                               Text(
                                 'scores',
                                 style: TextStyle(
-                                    fontSize: 30.sp, color: Colors.white),
+                                    fontSize: 30, color: Colors.white),
                               ),
                               SizedBox(
-                                width: 20.w,
+                                width: 20,
                               ),
                               Text('$myscors',
                                   style: TextStyle(
-                                      fontSize: 24.sp, color: Colors.white))
+                                      fontSize: 24, color: Colors.white))
                             ],
                           )),
                       Visibility(
@@ -144,19 +148,19 @@ int? money  ;
                                 child: Image.asset(imageCoins),
                               ),
                               SizedBox(
-                                width: 30.w,
+                                width: 30,
                               ),
                               Text('${coins.toInt()}',
                                   style: TextStyle(
-                                      fontSize: 24.sp, color: Colors.white))
+                                      fontSize: 24, color: Colors.white))
                             ],
                           )),
                       SizedBox(
-                        height: 50.h,
+                        height: 50,
                       ),
                       Container(
-                        color: Color(0x8E470E01),
-                        height: 40.h,
+                        color: widget.backGround ,
+                        height: 40,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -170,16 +174,18 @@ int? money  ;
                                   child: Icon(
                                     Icons.replay,
                                     color: Colors.white,
-                                    size: 40.sp,
+                                    size: 40,
                                   )),
                             ),
                             Expanded(
                               child: MaterialButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    showStore();
+                                  },
                                   child: Icon(
                                     Icons.local_grocery_store,
                                     color: Colors.white,
-                                    size: 40.sp,
+                                    size: 40,
                                   )),
                             ),
                             Expanded(
@@ -206,7 +212,7 @@ int? money  ;
                                     child: Icon(
                                       Icons.play_arrow,
                                       color: Colors.white,
-                                      size: 40.sp,
+                                      size: 40,
                                     )),
                               ),
                             )
@@ -219,7 +225,7 @@ int? money  ;
                 Positioned(
                   left: MediaQuery.of(context).size.width / 3 - 30,
                   child: Container(
-                      color: Color(0xdd683503),
+                      color: Color(0xff011e1e),
                       child: Text(widget.iswin ? 'win' : 'loss',
                           style: Theme.of(context).primaryTextTheme.headline2)),
                 )
@@ -228,4 +234,13 @@ int? money  ;
       ),
     );
   }
+  Future showStore() async {
+    return await showDialog(
+        barrierDismissible:false ,
+        context: context,
+        builder: (_) {
+          return GameStoresDialog(background: widget.backGround ,);
+        });
+  }
+
 }

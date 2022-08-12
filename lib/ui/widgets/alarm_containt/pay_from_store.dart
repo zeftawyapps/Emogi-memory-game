@@ -17,8 +17,8 @@ class ContentPayFromStoreDialog extends StatelessWidget {
         Expanded(
           flex: 1,
           child: Container(
-            width: 30.w,
-            height: 50.h,
+            width: 30,
+            height: 50,
             decoration: BoxDecoration(
                 color: bcbegGamebtn,
                 border: Border.all(color: Colors.blueAccent),
@@ -27,7 +27,7 @@ class ContentPayFromStoreDialog extends StatelessWidget {
               child: Icon(
                 type == sharedhelpadd ? Icons.add : Gameicons.ok,
                 color: Colors.white,
-                size: 25.sp ,
+                size: 25 ,
               ),
             ),
           ),
@@ -36,7 +36,7 @@ class ContentPayFromStoreDialog extends StatelessWidget {
           flex: 5 ,
           child: Text(
             "   $count  Added",
-            style: TextStyle(fontSize: 35.sp, color: Colors.white),
+            style: TextStyle(fontSize: 35, color: Colors.white),
           ),
         ),
       ],

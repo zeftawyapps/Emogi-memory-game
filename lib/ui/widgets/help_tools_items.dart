@@ -64,14 +64,14 @@ class HelpToolsItem extends StatelessWidget {
             flex: 2,
             child: Text(
               "   $count",
-              style: TextStyle(fontSize: 20.sp, color: Colors.white),
+              style: TextStyle(fontSize: 20.sp , color: Colors.white),
             ),
           ),
           Expanded(
             flex: 2,
             child: Container(
-              width: 30,
-              height: 30,
+              width: 30.h,
+              height: 30.w ,
               child: Image.asset(imageCoins),
             ),
           ),
@@ -80,7 +80,7 @@ class HelpToolsItem extends StatelessWidget {
             child: Center(
               child: Text(
                 " $price",
-                style: TextStyle(fontSize: 20.sp, color: Colors.white),
+                style: TextStyle(fontSize: 20.sp , color: Colors.white),
               ),
             ),
           ),
@@ -99,8 +99,8 @@ class HelpToolsItem extends StatelessWidget {
                 }
               },
               child: Container(
-                height: 50,
-                width: 70,
+                height: 50.h ,
+                width: 70.w ,
                 decoration: BoxDecoration(
                     color: bcbegcard,
                     border: Border.all(color: Colors.blueAccent),
@@ -111,7 +111,7 @@ class HelpToolsItem extends StatelessWidget {
                     child: Text(
                       "puy",
                       style: TextStyle(
-                          fontSize: 15.sp,
+                          fontSize: 15.sp ,
                           color: isEnabled ? Colors.white : Colors.red[700]),
                     ),
                   ),
@@ -138,7 +138,7 @@ gameProvider.declineMoney(price);
     showDialog(
         context: context,
         builder: (c) {
-          return AlarmDialog(containt: ContentPayFromStoreDialog(count: count , type: type  ,
+          return AlarmDialog( backgruod:gameCubit .  stageConfigs.dailogcolor! ,  containt: ContentPayFromStoreDialog(count: count , type: type  ,
           ) , title:   "pay", playsound:  PlaySound().playwrang) ;
         }).then((value){
           payTheProduct() ;
@@ -149,7 +149,7 @@ gameProvider.declineMoney(price);
     showDialog(
         context: context,
         builder: (c) {
-         return AlarmDialog(containt :ContentUnsuffes(state:1 ,gameCubit:  gameCubit,) , title: "not found",playsound: PlaySound().playwrang,) ;
+         return AlarmDialog( backgruod: gameCubit.stageConfigs.dailogcolor! , containt :ContentUnsuffes(state:1 ,gameCubit:  gameCubit,) , title: "not found",playsound: PlaySound().playwrang,) ;
     });
   }
 

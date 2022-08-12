@@ -8,15 +8,20 @@ String imageCoins = "assets/img/coins.png";
 String imageAds  = "assets/img/ads.png";
 
 // Colors
-var backgroungrideGame =
-LinearGradient(
-  begin: Alignment.topRight,
-  end: Alignment.bottomLeft,
+// var backgroungrideGame =
+// LinearGradient(
+//   begin: Alignment.topRight,
+//   end: Alignment.bottomLeft,
+//
+//   colors: [
+//   bcbeg30 , bcbeg24 , bcbeg20
+//
+//   ],);
 
-  colors: [
-  bcbeg4 , bcbeg5 , bcbeg6
+Color cardOffColors = Color(0xff047a7a);
+Color cardOnColors = Color(0xffffffff);
 
-  ],);
+
 Color bcbeg = Color(0xFF7B0303);
 Color bcbeg3 = Color(0xff614c04);
 Color bcbeg2 = Color(0xff095304);

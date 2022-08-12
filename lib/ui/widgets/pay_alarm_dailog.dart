@@ -6,13 +6,15 @@ import '../../logic/procject_metiods.dart';
 import '../values.dart';
 
 class AlarmDialog extends StatelessWidget {
-  AlarmDialog({Key? key, required this.containt, required this.title , required    this.playsound })
+  AlarmDialog({Key? key, required this.containt, required this.title , required    this.playsound  ,
+  required this.backgruod
+  })
       : super(key: key);
   Widget containt;
   String title;
   String  playsound ;
   PlaySound play = PlaySound();
-
+Color backgruod;
   @override
   Widget build(BuildContext context) {
     play.playPayment();
@@ -21,8 +23,9 @@ class AlarmDialog extends StatelessWidget {
         child: Container(
 
           decoration: BoxDecoration(
-              color: Color(0xdd683503),
- 
+              color: backgruod ,
+
+
               border: Border.all(color: Colors.blueAccent),
               borderRadius: BorderRadius.circular(10)),
           height: 240.h,
@@ -32,10 +35,10 @@ class AlarmDialog extends StatelessWidget {
               Expanded(
                 flex:  1 ,
                 child: Container(
-                    color: Color(0xdd683503),
+                    color: Color(0xff05321b),
                     child: Center(
                       child: Text('$title',
-                          style:TextStyle(color: Colors.white , fontSize: 25.sp) ),
+                          style:TextStyle(color: Colors.white , fontSize: 25) ),
                     )),
               ),
               Expanded(

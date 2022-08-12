@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import '../values.dart';
 class BacgGame  extends StatelessWidget {
   Widget? child ;
-
-  BacgGame(this.child);
+  LinearGradient background ;
+  BacgGame({required  this.child ,  required  this.background });
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,7 @@ class BacgGame  extends StatelessWidget {
       width: MediaQuery.of(context).size.width,
       height:MediaQuery.of(context).size.height ,
       decoration:  BoxDecoration(
-          gradient: backgroungrideGame
+          gradient: background
       )
       ,
       child: FadeIn(child: child!),
@@ -35,10 +35,8 @@ class BacgSplach  extends StatelessWidget {
 
       width: MediaQuery.of(context).size.width,
       height:MediaQuery.of(context).size.height ,
-      decoration:  BoxDecoration(
-          gradient: backgroungrideGame
-      )
-      ,
+
+
       child: child,
     );
   }

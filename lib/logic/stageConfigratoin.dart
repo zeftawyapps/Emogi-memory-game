@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:flutter/cupertino.dart';
+
 class StageConfigs {
   List<String> imagesvaluesFirstStages = [
     "😀",
@@ -534,7 +536,87 @@ class StageConfigs {
     "⏩","⏪","⏫","⏬","◀️", "➡️","⬅️","⬆️","⬇️","↗️" ,"🔇","🔉","🔊","🔔","🔕","📣","📢","🗨️","👁️" ,"💬","💭","🕡","🕠","🕟","🕞","🕝","🕜","🕛","🕚","🕙","🕘","🕗","🕖","🕕","🕔","🕓","🕒","🕑","🕐","🕧","🕦","🕥","🕤","🕣","🕢","♠️","♣️","♥️","♦️"
         "↘️","↙️","↖️","↕️","↔️","↪️","↩️","⤴️","⤵️","🔀","🔁","🔂","🔄","🔃","🎵","🎶","➕","➖","➗","✖️","♾️","💲","💱","™️","©️","®️" ,"➰", "🔲","🔳","🔷","🔶","🔹","🔸","🔻","🔺"
   ];
+List<LinearGradient> _lineargradien=[
+  LinearGradient(
+  begin: Alignment.topRight,
+  end: Alignment.bottomLeft,
 
+  colors: [
+  Color(0xff76b5c0)  , Color(0xff66e9e7), Color(0xffb31d47)
+
+  ],) ,
+  LinearGradient(
+    begin: Alignment.topRight,
+    end: Alignment.bottomLeft,
+
+    colors: [
+      Color(0xff292e5b)  , Color(0xff17b9b6), Color(0xffb3381d)
+
+    ],) ,
+  LinearGradient(
+    begin: Alignment.topRight,
+    end: Alignment.bottomLeft,
+
+    colors: [
+      Color(0xff767ac0)  , Color(0xff6a66e9), Color(0xff110344)
+
+    ],) ,
+  LinearGradient(
+    begin: Alignment.topRight,
+    end: Alignment.bottomLeft,
+
+    colors: [
+      Color(0xffefa662)  , Color(0xffff9500), Color(0xff5b2903)
+
+    ],) ,
+  LinearGradient(
+    begin: Alignment.topRight,
+    end: Alignment.bottomLeft,
+
+    colors: [
+      Color(0xffa476c0)  , Color(0xff840886), Color(0xff400842)
+
+    ],) ,
+
+];
+List<Color> _cardOfColors = [
+  Color(0xff047a7a) ,
+  Color(0xff787a04) ,
+  Color(0xff902e53) ,
+  Color(0xff1b4105) ,
+  Color(0xff8f00fd)
+];
+
+
+  List<Color> _deilogColors = [
+    Color(0xff022a2a) ,
+    Color(0xff323302) ,
+    Color(0xff360c1c) ,
+    Color(0xff0a1703) ,
+    Color(0xff1b022d)
+  ];
+  List<Color> _helpColors = [
+    Color(0xff8ca609) ,
+    Color(0xff8ca609) ,
+    Color(0xff8ca609),
+    Color(0xff8ca609),
+    Color(0xff8ca609)
+  ];
+
+  List<Color> _lowAttempet = [
+    Color(0x43a6090e) ,
+    Color(0x43a6090e) ,
+    Color(0x43a6090e) ,
+    Color(0x43a6090e) ,
+    Color(0x43a6090e) ,
+  ];
+  List<Color> _cardOnColors = [
+    Color(0xedf3f7f7) ,
+    Color(0xfff7f8c8) ,
+    Color(0xffefa0bd) ,
+    Color(0xffd1ecc0) ,
+    Color(0xffdecbee)
+  ];
   List<List<String>> imaglevels = [];
 
   List<String> imagValue = [];
@@ -549,6 +631,12 @@ class StageConfigs {
   int imagelevelRandom = 0;
   int imageArray = 0;
   int colomesno = 0;
+  LinearGradient? background ;
+  Color? cardOfColor ;
+  Color? cardOnColor ;
+  Color? dailogcolor;
+  Color? helpcardsColor;
+  Color? LawAttempetCardsColor;
 
   StageConfigs(int gamelevle) {
     int cardNo;
@@ -557,7 +645,7 @@ class StageConfigs {
     this.gamelevle = gamelevle;
     List<String> imaglist;
     int stage = _setStagesConstrain();
-
+_getBackgrund();
     switch (stage) {
       case 0: //3
         _setProparties(
@@ -568,7 +656,7 @@ class StageConfigs {
             defculat: 0);
         break;
       case 1: //up 3
-        cardNo = _getCardNo([6, 8, 12]);
+        cardNo = _getCardNo([ 8, 12]);
         culomno = _getCulomNo(cardNo);
         imaglist = _getimagLevel(1);
         lastNo = _getLasNo(imaglist.length);
@@ -721,5 +809,17 @@ class StageConfigs {
       print("ir $ir");
       return imaglevels[ir];
     }
+  }
+
+void  _getBackgrund(){
+  Random rands = new Random();
+  int randomNumber = rands.nextInt(5);
+
+
+background = _lineargradien[randomNumber];
+cardOfColor = _cardOfColors[randomNumber];
+cardOnColor = _cardOnColors[randomNumber];
+dailogcolor = _deilogColors[randomNumber];
+helpcardsColor = _helpColors[randomNumber] ;
   }
 }

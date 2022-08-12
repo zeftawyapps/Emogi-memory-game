@@ -13,6 +13,7 @@ class GameController{
   // int helpAddTryis= 20;
   // int helpAddCurrectCard= 10;
 int defcualt = 0 ;
+GameController.init();
   GameController(
       { required  this.gamelevle,
     required   this.cardnum,

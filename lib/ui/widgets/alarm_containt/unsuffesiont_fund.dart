@@ -39,7 +39,7 @@ class _ContentUnsuffesState extends State<ContentUnsuffes> {
       children: [
         Text(
           getMassage(),
-          style: TextStyle(color: Colors.white, fontSize: 18.sp),
+          style: TextStyle(color: Colors.white, fontSize: 18.sp  ),
         ),
         Visibility(
             visible: adsVisablity ,
@@ -53,8 +53,8 @@ class _ContentUnsuffesState extends State<ContentUnsuffes> {
                         adsVisablity = false ;
                       });
                     },
-                    child: Image(image: AssetImage(imageAds) ,height: 20.h, width: 20.w ,) ),
-                Text(getAdding(), style: TextStyle(fontSize: 10.sp ,color: Colors.white),)
+                    child: Image(image: AssetImage(imageAds) ,height: 20.h , width: 20 .w  ,) ),
+                Text(getAdding(), style: TextStyle(fontSize: 10.sp   ,color: Colors.white),)
               ],
             ))
       ],

@@ -58,6 +58,12 @@ class  ResultDone extends GameStart implements   GameStatus  {
 class  Winner extends GameStart implements   GameStatus  {
 
 }
+class  AttemetLow extends GameStart implements   GameStatus  {
+
+}
+class  AttemetNotLow extends GameStart implements   GameStatus  {
+
+}
 
 class  Losser extends GameStart implements   GameStatus  {
 
