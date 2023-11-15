@@ -196,17 +196,9 @@ class _GameResultDailogState extends State<GameResultDailog> {
                                       int g = widget.gamelevle;
                                       SharedPreferences sharedPreferences =
                                           await SharedPreferences.getInstance();
-                                      // gameProvider.restartgame();
-                                      // gameProvider.game();
-                                      sharedPreferences.setInt(
+                                            sharedPreferences.setInt(
                                           sharedStages, g + 1);
-                                      // sharedPreferences.setInt(
-                                      //     sharedMoney, coins.toInt());
-
                                       gameProvider.addMoney(coins.toInt());
-
-                                      // Navigator.pushReplacement(context, MaterialPageRoute(builder: (c)=>GameSreen()  ) );
-
                                       Navigator.pop(context);
                                     },
                                     child: Icon(
@@ -225,7 +217,6 @@ class _GameResultDailogState extends State<GameResultDailog> {
                 Positioned(
                   left: MediaQuery.of(context).size.width / 3 - 30,
                   child: Container(
-                      color: Color(0xff011e1e),
                       child: Text(widget.iswin ? 'win' : 'loss',
                           style: Theme.of(context).primaryTextTheme.headline2)),
                 )

@@ -10,8 +10,8 @@ class BacgGame  extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-
+    return AnimatedContainer(
+duration: Duration(milliseconds: 900),
       width: MediaQuery.of(context).size.width,
       height:MediaQuery.of(context).size.height ,
       decoration:  BoxDecoration(

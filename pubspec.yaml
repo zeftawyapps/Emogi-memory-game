@@ -28,10 +28,11 @@ dependencies:
   drag_select_grid_view:
   animate_do:
   path_provider:
-  shared_preferences:
+  shared_preferences: ^2.0.15
   flutter_bloc: ^7.0.1
   audioplayers: ^0.20.1
-
+  rate_my_app:  ^1.0.0+2
+  flutter_facebook_auth: ^4.4.1
   cupertino_icons: ^1.0.2
   google_mobile_ads: ^1.2.0
 

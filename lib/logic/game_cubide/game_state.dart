@@ -72,3 +72,7 @@ class  Losser extends GameStart implements   GameStatus  {
 class  StopAction extends GameStart implements   GameStatus  {
 
 }
+
+class  RateGame extends GameStart implements   GameStatus  {
+
+}

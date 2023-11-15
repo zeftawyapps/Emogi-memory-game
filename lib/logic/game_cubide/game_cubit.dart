@@ -8,6 +8,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:memory_game/logic/game_contraller.dart';
 import 'package:memory_game/logic/game_cubide/on_click_card.dart';
+import 'package:memory_game/logic/game_theams_config.dart';
 import 'package:memory_game/logic/imgvalues.dart';
 import 'package:memory_game/logic/mylibs/modulscreateor.dart';
 import 'package:memory_game/logic/mylibs/stagesmodule.dart';
@@ -27,6 +28,7 @@ class GameCubit extends Cubit<GameStatus> {
 
   InterstitialAd? _interstitialAd;
   RewardedAd? rewardedAd ;
+  GameTheameConfig? gameTheameConfig ;
   GameCubit() : super(GameStatus());
    GameController gameConraller = GameController.init();
   StagesModule stagesManager = StagesModule();
@@ -35,6 +37,7 @@ late  BuildContext  context ;
   bool isNoAction = true;
   int helpAddTryis = 20;
   int helpAddCurrectCard = 20;
+  bool isAppRated = false ;
   // int _cardnum = 2;
   int gamelevle = 31;
   // int _lastno = 0;
@@ -128,7 +131,8 @@ void initRewardedAdsLesteners(int state ){
  this.  context = context ;
     await _loadSavedData();
     stageConfigs = StageConfigs(gamelevle);
-
+    gameTheameConfig = GameTheameConfig();
+    gameTheameConfig!.getBackgrund() ;
     gameConraller = GameController(
         defcualt: stageConfigs.defcult,
         gamelevle: gamelevle,
@@ -146,10 +150,17 @@ void initRewardedAdsLesteners(int state ){
     isNoAction = false;
      await loadInitAds();
     await loadRewardedAds();
+    _checkGameRated() ;
     emit(GameLoading());
     emit(GameStart());
   }
-
+_checkGameRated(){
+   if (gamelevle%10 == 0 ){
+   if (! isAppRated) {
+     emit(RateGame());
+   }
+   }
+}
   Future showInitAds() async  {
     if (_interstitialAd != null) {
       emit(GameLoading());
@@ -161,6 +172,8 @@ void initRewardedAdsLesteners(int state ){
     await _loadSavedData();
     await loadInitAds();
     await loadRewardedAds();
+    gameTheameConfig = GameTheameConfig();
+    gameTheameConfig!.getBackgrund() ;
     gameConraller = GameController(
         defcualt: stageConfigs.defcult,
         gamelevle: gamelevle,
@@ -188,9 +201,12 @@ void initRewardedAdsLesteners(int state ){
   }
 
   void gameNextLevel() async {
+    gameTheameConfig = GameTheameConfig();
+    gameTheameConfig!.getBackgrund() ;
     await _loadSavedData();
     stageConfigs = StageConfigs(gamelevle);
-    showInitAds();
+    if (gamelevle%3 == 0 ){
+    showInitAds();}
     await loadInitAds();
      await loadRewardedAds();
     gameConraller = GameController(
@@ -208,6 +224,7 @@ void initRewardedAdsLesteners(int state ){
     imagesvalues = stageConfigs.imagValue;
     _randomchosing();
     isNoAction = false;
+    _checkGameRated() ;
     emit(GameLoading());
     Timer(Duration(milliseconds: 100), () {
       _counter = 0;
@@ -255,7 +272,7 @@ void initRewardedAdsLesteners(int state ){
   void helpcurect() {
     if ( helpAddCurrectCard <= 0) {
       helpAddCurrectCard = 0 ;
-     showDialog(context: context , builder:(c)=>AlarmDialog(containt:ContentUnsuffes(state:3 ,gameCubit: this,), title: "not found",playsound: PlaySound().playwrang, backgruod: stageConfigs.dailogcolor!,) ) ;
+     showDialog(context: context , builder:(c)=>AlarmDialog(containt:ContentUnsuffes(state:3 ,gameCubit: this,), title: "not found",playsound: PlaySound().playwrang, backgruod: gameTheameConfig!.dailogcolor!,) ) ;
 
    return ;
     }else {
@@ -293,7 +310,7 @@ void initRewardedAdsLesteners(int state ){
   void helpAdd() {
     if (  helpAddTryis <= 0) {
       helpAddTryis = 0 ;
-      showDialog(context: context , builder:(c)=>AlarmDialog(containt:ContentUnsuffes(state:2 ,gameCubit:  this,),backgruod: stageConfigs.dailogcolor! ,  title: "not found" ,  playsound:  PlaySound().playwrang,  )  ) ;
+      showDialog(context: context , builder:(c)=>AlarmDialog(containt:ContentUnsuffes(state:2 ,gameCubit:  this,),backgruod: gameTheameConfig!.dailogcolor! ,  title: "not found" ,  playsound:  PlaySound().playwrang,  )  ) ;
 return ;
     }else {
     gameConraller.trayes = gameConraller.trayes + 10;
@@ -384,7 +401,7 @@ void checkIfAttempetIsLow(){
     gamelevle = sharedPreferences.getInt(sharedStages) ?? _defultlevel;
     helpAddTryis = sharedPreferences.getInt(sharedhelpadd) ?? _defulthelpersAdd;
     helpAddCurrectCard = sharedPreferences.getInt(sharedhelpcurrect) ?? _defulthelpersCurrect;
-
+  isAppRated = sharedPreferences.getBool(sharedRateApp) ?? false ;
 
   }
 

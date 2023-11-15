@@ -62,7 +62,7 @@ class _GameStoresDialogState extends State<GameStoresDialog> {
                   MonyCounter(
                     money: money ?? 0,
                   ),
-                  Expanded(flex: 15, child: HelpToolsStore(money: money ?? 0)),
+                  Expanded(flex: 15, child: HelpToolsStore(money: money ?? 0, backgrund: widget.background,)),
                   SizedBox(
                     height: 10 ,
                   ),

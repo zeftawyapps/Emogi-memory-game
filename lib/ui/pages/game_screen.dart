@@ -7,8 +7,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:memory_game/logic/game_cubide/game_cubit.dart';
 import 'package:memory_game/ui/pages/gameresulte.dart';
+import 'package:memory_game/ui/pages/setting.dart';
 import 'package:memory_game/ui/pages/store.dart';
+import 'package:memory_game/ui/widgets/alarm_containt/rate_app.dart';
 import 'package:memory_game/ui/widgets/grideview.dart';
+import 'package:memory_game/ui/widgets/pay_alarm_dailog.dart';
 
 import '../values.dart';
 import '../widgets/bcg.dart';
@@ -85,6 +88,9 @@ class _GameScreenState extends State<GameScreen> {
                         if (s is HelpCorroctPued) {
                           gameCubit.loadSavedDataWithoutinit();
                         }
+                        if (s is RateGame){
+                          showRate() ;
+                        }
                         if (s is Winner) {
                           showWin()
                               .then((value) => {gameCubit.gameNextLevel()});
@@ -97,7 +103,7 @@ class _GameScreenState extends State<GameScreen> {
                                 builder: (_) {
                                   return GameResultDailog(
                                     backGround:
-                                        gameCubit.stageConfigs.dailogcolor!,
+                                        gameCubit.gameTheameConfig!.dailogcolor!,
                                     iswin: false,
                                     tryis: 0,
                                     cardNom: gameCubit.gameConraller.cardnum,
@@ -168,7 +174,9 @@ class _GameScreenState extends State<GameScreen> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       MaterialButton(
-                                          onPressed: () {},
+                                          onPressed: () {
+showSetting() ;
+                                          },
                                           child: Icon(
                                             Icons.settings,
                                             color: Colors.white,
@@ -214,7 +222,7 @@ class _GameScreenState extends State<GameScreen> {
                                                     Duration(milliseconds: 500),
                                                 decoration: BoxDecoration(
                                                     color: gameCubit
-                                                        .stageConfigs
+                                                        .gameTheameConfig!
                                                         .helpcardsColor,
                                                     border: Border.all(
                                                         color: lowAttempet
@@ -270,7 +278,7 @@ class _GameScreenState extends State<GameScreen> {
                                                       duration:Duration(milliseconds: 500) ,
                                                       decoration: BoxDecoration(
                                                           color: gameCubit
-                                                              .stageConfigs
+                                                              .gameTheameConfig!
                                                               .helpcardsColor,
                                                           border: Border.all(
                                                               color: lowAttempet
@@ -450,7 +458,7 @@ class _GameScreenState extends State<GameScreen> {
                                 ),
                               ],
                             ),
-                            background: gameCubit.stageConfigs.background!,
+                            background: gameCubit.gameTheameConfig!.background!,
                           );
                         } else {
                           return Container();
@@ -471,7 +479,7 @@ class _GameScreenState extends State<GameScreen> {
         context: context,
         builder: (_) {
           return GameResultDailog(
-            backGround: gameCubit.stageConfigs.dailogcolor!,
+            backGround: gameCubit.gameTheameConfig!.dailogcolor!,
             cardNom: gameCubit.gameConraller.cardnum,
             iswin: true,
             tryis: gameCubit.gameConraller.trayes,
@@ -486,9 +494,33 @@ class _GameScreenState extends State<GameScreen> {
         context: context,
         builder: (_) {
           return GameStoresDialog(
-            background: gameCubit.stageConfigs.dailogcolor!,
+            background: gameCubit.gameTheameConfig!.dailogcolor!,
           );
         }).then((value) => gameCubit.storeClosed());
+  }
+  Future showSetting() async {
+    int menuChosed = 0 ;
+
+    return await showDialog<int>(
+
+        barrierDismissible: false,
+        context: context,
+        builder: (_) {
+          return GameSettingsDialog(
+            background: gameCubit.gameTheameConfig!.dailogcolor!,
+          );
+        }).then((value) {
+          if (value == 1){gameCubit.gameRestart(); }
+    });
+  }
+  Future showRate() async {
+    return await showDialog(
+
+        barrierDismissible: false,
+        context: context,
+        builder: (_) {
+          return  RateAppDealoge( backgruod: gameCubit.gameTheameConfig!.dailogcolor!, )  ;
+        });
   }
 
 //

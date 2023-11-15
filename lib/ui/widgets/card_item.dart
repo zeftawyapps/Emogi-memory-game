@@ -137,7 +137,7 @@ class _CardItemState extends State<CardItem> {
                         offset: Offset(5.0, 5.0),
                       )
                     ],
-                    color: widget.gameCubit.stageConfigs.cardOfColor,
+                    color: widget.gameCubit.gameTheameConfig!.cardOfColor,
 
                     // border: Border.all(color: Colors.blueAccent),
                     borderRadius: BorderRadius.circular(20)),
@@ -159,7 +159,7 @@ class _CardItemState extends State<CardItem> {
                         offset: Offset(5.0, 5.0),
                       )
                     ],
-                    color: widget.gameCubit.stageConfigs.cardOnColor,
+                    color: widget.gameCubit.gameTheameConfig!.cardOnColor,
 
                     // border: Border.all(color: Colors.blueAccent),
                     borderRadius: BorderRadius.circular(20)),

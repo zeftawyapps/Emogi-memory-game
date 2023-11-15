@@ -16,7 +16,7 @@ import 'gameicons_icons.dart';
 
 class HelpToolsItem extends StatelessWidget {
   HelpToolsItem(
-      {Key? key,
+      {Key? key, required this.bodybackground  ,
       required this.type,
       required this.price,
       required this.count,
@@ -28,6 +28,7 @@ class HelpToolsItem extends StatelessWidget {
   int price;
   int count;
   int money;
+  Color bodybackground ;
   late bool isEnabled;
   late GameProvider gameProvider;
   GameCubit gameCubit;
@@ -55,7 +56,7 @@ class HelpToolsItem extends StatelessWidget {
                 child: Icon(
                   type == sharedhelpadd ? Icons.add : Gameicons.ok,
                   color: Colors.white,
-                  size: 25.sp,
+                  size: 18.sp,
                 ),
               ),
             ),
@@ -64,7 +65,7 @@ class HelpToolsItem extends StatelessWidget {
             flex: 2,
             child: Text(
               "   $count",
-              style: TextStyle(fontSize: 20.sp , color: Colors.white),
+              style: TextStyle(fontSize: 15.sp , color: Colors.white),
             ),
           ),
           Expanded(
@@ -80,7 +81,7 @@ class HelpToolsItem extends StatelessWidget {
             child: Center(
               child: Text(
                 " $price",
-                style: TextStyle(fontSize: 20.sp , color: Colors.white),
+                style: TextStyle(fontSize: 18.sp , color: Colors.white),
               ),
             ),
           ),
@@ -138,8 +139,8 @@ gameProvider.declineMoney(price);
     showDialog(
         context: context,
         builder: (c) {
-          return AlarmDialog( backgruod:gameCubit .  stageConfigs.dailogcolor! ,  containt: ContentPayFromStoreDialog(count: count , type: type  ,
-          ) , title:   "pay", playsound:  PlaySound().playwrang) ;
+          return AlarmDialog( backgruod: bodybackground ,  containt: ContentPayFromStoreDialog(count: count , type: type  ,
+          ) , title:   "buy", playsound:  PlaySound().playwrang) ;
         }).then((value){
           payTheProduct() ;
     });
@@ -149,7 +150,7 @@ gameProvider.declineMoney(price);
     showDialog(
         context: context,
         builder: (c) {
-         return AlarmDialog( backgruod: gameCubit.stageConfigs.dailogcolor! , containt :ContentUnsuffes(state:1 ,gameCubit:  gameCubit,) , title: "not found",playsound: PlaySound().playwrang,) ;
+         return AlarmDialog( backgruod: bodybackground, containt :ContentUnsuffes(state:1 ,gameCubit:  gameCubit,) , title: "not found",playsound: PlaySound().playwrang,) ;
     });
   }
 
