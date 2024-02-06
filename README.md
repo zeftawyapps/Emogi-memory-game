@@ -1,4 +1,4 @@
-# Imogi_memory_game
+# Emogi_memory_game
 the game of memory to expalain the memory storage 
 # install geme:
 1- download the project
